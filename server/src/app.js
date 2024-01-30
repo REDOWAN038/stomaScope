@@ -5,8 +5,8 @@ const rateLimit = require("express-rate-limit")
 const app = express()
 
 // const userRoutes = require("../routes/userRoutes")
-// const seedRoutes = require("../routes/seedRoutes")
-// const { errorResponse } = require("../handler/responseHandler")
+const seedRoutes = require("../routes/seedRoutes")
+const { errorResponse } = require("../handler/responseHandler")
 
 const limiter = rateLimit({
 	windowMs : 1*60*1000,
@@ -22,7 +22,7 @@ app.use(limiter)
 
 // routes
 // app.use("/api/v1/users",userRoutes)
-// app.use("/api/v1/seed",seedRoutes)
+app.use("/api/v1/seed",seedRoutes)
 
 app.get("/api/v1/test",(req,res)=>{
     res.status(200).json({
