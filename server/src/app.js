@@ -4,7 +4,7 @@ const morgan = require("morgan")
 const rateLimit = require("express-rate-limit")
 const app = express()
 
-// const userRoutes = require("../routes/userRoutes")
+const userRoutes = require("../routes/userRoutes")
 const seedRoutes = require("../routes/seedRoutes")
 const { errorResponse } = require("../handler/responseHandler")
 
@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(limiter)
 
 // routes
-// app.use("/api/v1/users",userRoutes)
+app.use("/api/v1/users",userRoutes)
 app.use("/api/v1/seed",seedRoutes)
 
 app.get("/api/v1/test",(req,res)=>{
