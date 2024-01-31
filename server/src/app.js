@@ -6,6 +6,7 @@ const app = express()
 
 const userRoutes = require("../routes/userRoutes")
 const seedRoutes = require("../routes/seedRoutes")
+const authRoutes = require("../routes/authRoutes")
 const { errorResponse } = require("../handler/responseHandler")
 
 const limiter = rateLimit({
@@ -23,6 +24,7 @@ app.use(limiter)
 // routes
 app.use("/api/v1/users",userRoutes)
 app.use("/api/v1/seed",seedRoutes)
+app.use("/api/v1/auth",authRoutes)
 
 app.get("/api/v1/test",(req,res)=>{
     res.status(200).json({
