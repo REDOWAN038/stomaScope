@@ -7,6 +7,10 @@ const jwtAccessKey = process.env.JWT_ACCESS_KEY
 const smtpUser = process.env.SMTP_USER || ""
 const smtpPassword = process.env.SMTP_PASS || ""
 const clientURL = process.env.CLIENT_URL || ""
+const cloudName = process.env.CLOUDINARY_NAME
+const cloudApiKey = process.env.CLOUDINARY_API_KEY
+const cloudSecretKey = process.env.CLOUDINARY_SECRET_KEY
+
 
 
 module.exports = {
@@ -16,5 +20,8 @@ module.exports = {
     smtpUser,
     smtpPassword,
     clientURL,
-    jwtAccessKey
+    jwtAccessKey,
+    cloudName,
+    cloudApiKey,
+    cloudSecretKey
 }

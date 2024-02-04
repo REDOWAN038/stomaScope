@@ -2,11 +2,13 @@ const createError = require("http-errors")
 const jwt = require("jsonwebtoken")
 const fs = require("fs")
 const userModel = require("../models/userModel")
+const fileModel = require("../models/fileModel")
 const { successResponse } = require("../handler/responseHandler")
 const { default: mongoose } = require("mongoose")
 const { createJWT } = require("../handler/jwt")
 const { jwtActivationKey, clientURL } = require("../src/secret")
 const { sendingMail } = require("../handler/email")
+const cloudinary = require("../config/cloudinary")
 
 // register a user
 const registerUser = async(req,res,next)=>{
@@ -90,10 +92,27 @@ const activateUserAccount = async (req,res,next)=>{
     }
 }
 
-// handle upload video
-const handleUploadVideo = async(req,res,next)=>{
+// handle upload file
+const handleUploadFile = async(req,res,next)=>{
     try {
-        console.log(req.body.userId);
+        const {name, userId} = req.body
+        const image = req.file?.path
+
+        const newFile = {name,image,uploader:userId}
+
+        if(image){
+            const response = await cloudinary.uploader.upload(image,{
+                folder : "stomaScope/images"
+            })
+            newFile.image = response.secure_url
+        }
+
+        const file = await fileModel.create(newFile)
+        return successResponse(res,{
+            statusCode:200,
+            message:"file uploaded successfully",
+            payload:{file}
+        })
     } catch (error) {
         next(error)
     }
@@ -102,5 +121,5 @@ const handleUploadVideo = async(req,res,next)=>{
 module.exports = {
     registerUser,
     activateUserAccount,
-    handleUploadVideo
+    handleUploadFile
 }

@@ -34,6 +34,12 @@ Detecting stomata from a video/image
 ```http
   post /api/v1/auth/logout
 ```
+
+#### upload image
+
+```http
+  post /api/v1/users/upload
+```
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -51,6 +57,12 @@ To run this project, you will need to add the following environment variables to
 `SMTP_PASS`
 
 `CLIENT_URL`
+
+`CLOUDINARY_NAME`
+
+`CLOUDINARY_API_KEY`
+
+`CLOUDINARY_SECRET_KEY`
 
 
 

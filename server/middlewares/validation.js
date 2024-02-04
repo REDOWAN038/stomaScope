@@ -29,6 +29,19 @@ const validateUserRegistration = [
     // .withMessage("Invalid phone number format. Must be 11 digits starting with 01."),
 ]
 
+const validateFileUpload = [
+    body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Name is required"),
+
+    // body("image")
+    // .notEmpty()
+    // .withMessage("image is required bro"),
+
+]
+
 module.exports = {
-    validateUserRegistration
+    validateUserRegistration,
+    validateFileUpload
 }
