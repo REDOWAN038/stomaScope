@@ -1,34 +1,26 @@
-const {body} = require("express-validator")
+const createError = require("http-errors")
+const jwt = require("jsonwebtoken")
+const { jwtAccessKey } = require("../src/secret")
 
-// validate user registration input
-const validateUserRegistration = [
-    body("name")
-    .trim()
-    .notEmpty()
-    .withMessage("Name is required"),
+const isLoggedIn = async(req,res,next)=>{
+    try {
+        const token = req.cookies.accessToken
+        if(!token){
+            throw createError(401, "user is not logged in")
+        }
 
-    body("email")
-    .trim()
-    .notEmpty()
-    .withMessage("Email is required")
-    .isEmail()
-    .withMessage("Emails is not valid"),
+        const decoded = jwt.verify(token, jwtAccessKey)
+        if(!decoded){
+            throw createError(401, "invalid token")
+        }
 
-    body("password")
-    .trim()
-    .notEmpty()
-    .withMessage("Pasword is required"),
-    // .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
-    // .withMessage("Password must be at least 8 characters, contain a lowercase letter, an uppercase letter, a number, and a special character"),
-
-    body("phone")
-    .trim()
-    .notEmpty()
-    .withMessage("Phone is required")
-    // .matches(/^01\d{9}$/)
-    // .withMessage("Invalid phone number format. Must be 11 digits starting with 01."),
-]
+        req.body.userId = decoded._id
+        next()
+    } catch (error) {
+        return next(error)
+    }
+}
 
 module.exports = {
-    validateUserRegistration
+    isLoggedIn
 }

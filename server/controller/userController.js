@@ -90,7 +90,17 @@ const activateUserAccount = async (req,res,next)=>{
     }
 }
 
+// handle upload video
+const handleUploadVideo = async(req,res,next)=>{
+    try {
+        console.log(req.body.userId);
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     registerUser,
-    activateUserAccount
+    activateUserAccount,
+    handleUploadVideo
 }

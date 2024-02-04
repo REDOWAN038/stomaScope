@@ -2,6 +2,7 @@ const express = require("express")
 const createError = require('http-errors')
 const morgan = require("morgan")
 const rateLimit = require("express-rate-limit")
+const cookieParser = require("cookie-parser")
 const app = express()
 
 const userRoutes = require("../routes/userRoutes")
@@ -20,6 +21,7 @@ app.use(morgan("dev"))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(limiter)
+app.use(cookieParser())
 
 // routes
 app.use("/api/v1/users",userRoutes)
