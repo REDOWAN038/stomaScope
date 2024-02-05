@@ -1,5 +1,5 @@
 const express = require("express")
-const { registerUser, activateUserAccount, handleUploadFile } = require("../controller/userController")
+const { registerUser, activateUserAccount, handleUploadFile, getUserByID } = require("../controller/userController")
 const { validateUserRegistration, validateFileUpload } = require("../middlewares/validation")
 const { runValidation } = require("../middlewares")
 const { isLoggedIn, isLoggedOut } = require("../middlewares/auth")
@@ -14,5 +14,8 @@ router.post("/activate", isLoggedOut, activateUserAccount)
 
 // upload file
 router.post("/upload", uploadImage.single("image"), isLoggedIn, handleUploadFile)
+
+// get user profile
+router.get("/profile", isLoggedIn, getUserByID)
 
 module.exports = router

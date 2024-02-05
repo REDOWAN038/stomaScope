@@ -40,6 +40,12 @@ Detecting stomata from a video/image
 ```http
   post /api/v1/users/upload
 ```
+
+#### get single user profile
+
+```http
+  get /api/v1/users/profile
+```
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file

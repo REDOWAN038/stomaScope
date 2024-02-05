@@ -118,8 +118,25 @@ const handleUploadFile = async(req,res,next)=>{
     }
 }
 
+const getUserByID = async(req,res,next)=>{
+    try {
+        const {userId} = req.body
+        const options = {password:0}
+        const user = await userModel.findById(userId, options)
+
+        return successResponse(res,{
+            statusCode:200,
+            message:"user returned successfully",
+            payload:{user}
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     registerUser,
     activateUserAccount,
-    handleUploadFile
+    handleUploadFile,
+    getUserByID
 }
