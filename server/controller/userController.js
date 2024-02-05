@@ -118,6 +118,7 @@ const handleUploadFile = async(req,res,next)=>{
     }
 }
 
+// get single user 
 const getUserByID = async(req,res,next)=>{
     try {
         const {userId} = req.body
@@ -134,9 +135,26 @@ const getUserByID = async(req,res,next)=>{
     }
 }
 
+// get user upload history
+const getUserUploadHistory = async(req,res,next)=>{
+    try {
+        const {userId} = req.body
+        const history = await fileModel.find({uploader:userId})
+
+        return successResponse(res,{
+            statusCode:200,
+            message:"user upload history returned",
+            payload:{history}
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     registerUser,
     activateUserAccount,
     handleUploadFile,
-    getUserByID
+    getUserByID,
+    getUserUploadHistory
 }
