@@ -5,8 +5,34 @@ const cloudinary = require("../config/cloudinary")
 const { successResponse } = require("../handler/responseHandler")
 
 
+// handle upload file
+const handleUploadFile = async(req,res,next)=>{
+    try {
+        const {name, userId} = req.body
+        const image = req.file?.path
+
+        const newFile = {name,image,uploader:userId}
+
+        if(image){
+            const response = await cloudinary.uploader.upload(image,{
+                folder : "stomaScope/images"
+            })
+            newFile.image = response.secure_url
+        }
+
+        const file = await fileModel.create(newFile)
+        return successResponse(res,{
+            statusCode:200,
+            message:"file uploaded successfully",
+            payload:{file}
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 // delete file
-const deleteFile = async(req,res,next)=>{
+const handleDeleteFile = async(req,res,next)=>{
     try {
         const {userId} = req.body
         const {id} = req.params
@@ -15,7 +41,7 @@ const deleteFile = async(req,res,next)=>{
         if(!existingFile){
             throw createError(404, "invalid file id")
         }
-        
+
         if(userId!==existingFile.uploader.toString()){
             throw createError(401, "unauthorize")
         }
@@ -40,5 +66,6 @@ const deleteFile = async(req,res,next)=>{
 }
 
 module.exports = {
-    deleteFile
+    handleUploadFile,
+    handleDeleteFile
 }

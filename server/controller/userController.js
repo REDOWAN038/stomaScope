@@ -92,32 +92,6 @@ const activateUserAccount = async (req,res,next)=>{
     }
 }
 
-// handle upload file
-const handleUploadFile = async(req,res,next)=>{
-    try {
-        const {name, userId} = req.body
-        const image = req.file?.path
-
-        const newFile = {name,image,uploader:userId}
-
-        if(image){
-            const response = await cloudinary.uploader.upload(image,{
-                folder : "stomaScope/images"
-            })
-            newFile.image = response.secure_url
-        }
-
-        const file = await fileModel.create(newFile)
-        return successResponse(res,{
-            statusCode:200,
-            message:"file uploaded successfully",
-            payload:{file}
-        })
-    } catch (error) {
-        next(error)
-    }
-}
-
 // get single user 
 const getUserByID = async(req,res,next)=>{
     try {
@@ -154,7 +128,6 @@ const getUserUploadHistory = async(req,res,next)=>{
 module.exports = {
     registerUser,
     activateUserAccount,
-    handleUploadFile,
     getUserByID,
     getUserUploadHistory
 }

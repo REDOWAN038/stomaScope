@@ -51,7 +51,7 @@ Detecting stomata from a video/image
 #### upload image
 
 ```http
-  post /api/v1/users/upload
+  post /api/v1/file/upload
 ```
 
 
