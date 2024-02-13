@@ -1,9 +1,18 @@
 const userModel = require("../models/userModel")
+const fileModel = require("../models/fileModel")
 const data = require("../src/data")
+const cloudinary = require("../config/cloudinary")
 
 const seedUser = async(req,res,next)=>{
 	try {
+        const cookies = req.cookies
+        for(const cookieName in cookies){
+            res.clearCookie(cookieName)
+        }
 		await userModel.deleteMany({})
+		await fileModel.deleteMany({})
+        await cloudinary.api.delete_resources_by_prefix('stomaScope/images/')
+
 		const users = await userModel.insertMany(data.users)
 		return res.status(201).json({
 			success : true,
