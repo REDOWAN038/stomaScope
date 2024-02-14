@@ -4,8 +4,8 @@ import sys
 
 path = sys.argv[1]
 img = cv.imread(path)
-resized_img = cv.resize(img, (320, 240))
-cv.imwrite("/Users/red2724/Pictures/4.png", resized_img)
+gray_image = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+cv.imwrite(path, gray_image)
 
 
 

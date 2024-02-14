@@ -42,9 +42,7 @@ const handleUploadFile = async(req,res,next)=>{
         const output = await process(image)
 
         if(output){
-            console.log("output ", typeof(output));
-            console.log("image ", typeof(image));
-            const response = await cloudinary.uploader.upload(output,{
+            const response = await cloudinary.uploader.upload(image,{
                 folder : "stomaScope/images"
             })
             newFile.image = response.secure_url
