@@ -3,18 +3,48 @@ const fileModel = require("../models/fileModel")
 const createError = require("http-errors")
 const cloudinary = require("../config/cloudinary")
 const { successResponse } = require("../handler/responseHandler")
+const {PythonShell} = require("python-shell")
+const {spawn} = require("child_process")
 
+function process(imagePath) {
+    return new Promise((resolve, reject) => {
+        let dataBuffer = ''; // Buffer to accumulate data from stdout
+
+        const pythonProcess = spawn('python', ['/Users/red2724/Desktop/code/git/stomaScope/server/scripts/processImage.py', imagePath]);
+
+        pythonProcess.stdout.on('data', (data) => {
+            dataBuffer += data.toString(); // Append data to buffer
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+            reject(data.toString());
+        });
+
+        pythonProcess.on('close', (code) => {
+            console.log(`Python script exited with code ${code}`);
+            if (code === 0) {
+                resolve(dataBuffer); // Resolve with accumulated data
+            } else {
+                reject(`Python script exited with non-zero code ${code}`);
+            }
+        });
+    });
+}
 
 // handle upload file
 const handleUploadFile = async(req,res,next)=>{
     try {
         const {name, userId} = req.body
         const image = req.file?.path
-
         const newFile = {name,image,uploader:userId}
 
-        if(image){
-            const response = await cloudinary.uploader.upload(image,{
+        const output = await process(image)
+
+        if(output){
+            console.log("output ", typeof(output));
+            console.log("image ", typeof(image));
+            const response = await cloudinary.uploader.upload(output,{
                 folder : "stomaScope/images"
             })
             newFile.image = response.secure_url
