@@ -10,6 +10,8 @@ const clientURL = process.env.CLIENT_URL || ""
 const cloudName = process.env.CLOUDINARY_NAME
 const cloudApiKey = process.env.CLOUDINARY_API_KEY
 const cloudSecretKey = process.env.CLOUDINARY_SECRET_KEY
+const modelPath = process.env.MODEL_PATH
+const imageProcessPath = process.env.IMAGE_PROCESS_PATH
 
 
 
@@ -23,5 +25,7 @@ module.exports = {
     jwtAccessKey,
     cloudName,
     cloudApiKey,
-    cloudSecretKey
+    cloudSecretKey,
+    modelPath, 
+    imageProcessPath
 }

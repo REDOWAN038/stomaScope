@@ -85,6 +85,10 @@ To run this project, you will need to add the following environment variables to
 
 `CLOUDINARY_SECRET_KEY`
 
+`MODEL_PATH`
+
+`IMAGE_PROCESS_PATH`
+
 
 
 ## Run Locally
@@ -96,6 +100,12 @@ Clone the project
 ```
 
 #### To Run Backend
+Some python dependencies are required to run python scripts
+
+```bash
+  pip install python-opencv ultralytics
+```
+
 Go to the server directory
 
 ```bash
