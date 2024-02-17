@@ -112,13 +112,21 @@ const getUserByID = async(req,res,next)=>{
 // get user upload history
 const getUserUploadHistory = async(req,res,next)=>{
     try {
+        const page = Number(req.query.page) || 1
+        const limit = 6
+
         const {userId} = req.body
-        const history = await fileModel.find({uploader:userId})
+        const history = await fileModel.find({uploader:userId}).limit(limit).skip((page-1)*limit)
+        const total = await fileModel.find({uploader:userId}).countDocuments()
 
         return successResponse(res,{
             statusCode:200,
             message:"user upload history returned",
-            payload:{history}
+            payload:{
+                history : history,
+                currentPage : page,
+                totalPages : Math.ceil(total/limit)
+            }
         })
     } catch (error) {
         next(error)

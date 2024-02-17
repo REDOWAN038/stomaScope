@@ -19,6 +19,7 @@ const handleUploadFile = async(req,res,next)=>{
                 folder : "stomaScope/images"
             })
             newFile.image = response.secure_url
+            newFile.count = parseInt(output)
         }
 
         const file = await fileModel.create(newFile)
