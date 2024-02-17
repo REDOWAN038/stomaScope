@@ -9,6 +9,10 @@ const fileSchema = new mongoose.Schema({
         type:String,
         required:[true,"Image or Video is required"]
     },
+    count:{
+        type: Number,
+        default: 0
+    },
     uploader:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
