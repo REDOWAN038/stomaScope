@@ -3,12 +3,12 @@ const { imageProcessPath, modelPath } = require("../src/secret");
 
 const process = (imagePath)=>{
         return new Promise((resolve, reject) => {
-            let dataBuffer = ''; // Buffer to accumulate data from stdout
+            let dataBuffer; // Buffer to accumulate data from stdout
 
             const pythonProcess = spawn('python', [imageProcessPath, imagePath, modelPath]);
 
             pythonProcess.stdout.on('data', (data) => {
-                dataBuffer += data.toString(); // Append data to buffer
+                dataBuffer = data; // Append data to buffer
             });
 
             pythonProcess.stderr.on('data', (data) => {
