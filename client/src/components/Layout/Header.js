@@ -3,37 +3,21 @@ import { Menu } from '@material-ui/icons'
 
 const Header = () => {
   return(
-    <header className="w-screen h-14 flex justify-center items-center shadow-md px-4" id="header">
-        <nav className="nav container flex justify-between items-center">
+    <header className="w-screen h-14 flex justify-center items-center shadow-md" id="header">
+        <nav className="w-full flex justify-between items-center px-9 lg:w-large">
             <a href="#" className="nav__logo">
             <i class="fa-solid fa-leaf text-sgreen-100"></i><span className='ml-2 uppercase font-extrabold text-sm'> stomascope</span>
             </a>
-
-            <div className="nav__menu" id="nav-menu">
-                <ul className="nav__list hidden">
-                    <li className="nav__item">
-                        <a href="#home" className="nav__link active-link">Home</a>
-                    </li>
-                    <li className="nav__item">
-                        <a href="#about" className="nav__link">About</a>
-                    </li>
-                    <li className="nav__item">
-                        <a href="#products" className="nav__link">Products</a>
-                    </li>
-                    <li className="nav__item">
-                        <a href="#faqs" className="nav__link">FAQs</a>
-                    </li>
-                    <li className="nav__item">
-                        <a href="#contact" className="nav__link">Contact Us</a>
-                    </li>
+            <div className='flex gap-10'>
+                <ul className='md:flex gap-10 hidden'>
+                    <li><a className='hover:underline hover:decoration-sgreen-100 hover:decoration-2 hover:underline-offset-4 hover:text-sgreen-100'>Home</a></li>
+                    <li><a className='hover:underline hover:decoration-sgreen-100 hover:decoration-2 hover:underline-offset-4 hover:text-sgreen-100'>About</a></li>
+                    <li><a className='hover:underline hover:decoration-sgreen-100 hover:decoration-2 hover:underline-offset-4 hover:text-sgreen-100'>Procedure</a></li>
+                    <li><a className='hover:underline hover:decoration-sgreen-100 hover:decoration-2 hover:underline-offset-4 hover:text-sgreen-100'>FAQs</a></li>
+                    <li><a className='hover:underline hover:decoration-sgreen-100 hover:decoration-2 hover:underline-offset-4 hover:text-sgreen-100'>Contact Us</a></li>
                 </ul>
-
-                <div className="nav__close" id="nav-close">
-                    <i className="ri-close-line"></i>
-                </div>
+                <div className='md:hidden'><Menu/></div>
             </div>
-
-            <Menu/>
         </nav>
     </header>
   )

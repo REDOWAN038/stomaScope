@@ -16,6 +16,8 @@ module.exports = {
       height: {
       },
       width: {
+        medium: '768px',
+        large: '1024px',
       },
       fontFamily: {
       }
