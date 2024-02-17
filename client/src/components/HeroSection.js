@@ -6,7 +6,7 @@ const HeroSection = () => {
         <section className="flex flex-col justify-center items-center my-8" id="home">
             <img src={Poster} className="w-52"/>
             <div className="w-96 my-6">
-                <div className="font-bold text-3xl tracking-wide">
+                <div className="font-semibold text-3xl tracking-wide">
                     <h1>Detect stomata from leaf image and video</h1>
                 </div>
                 <p className="my-6 leading-6 text-sm font-light tracking-wider text-gray-700">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
