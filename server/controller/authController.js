@@ -7,35 +7,34 @@ const { createJWT } = require("../handler/jwt")
 const { jwtAccessKey } = require("../src/secret")
 
 // user login functionality
-const handleLogin = async(req,res,next)=>{
+const handleLogin = async (req, res, next) => {
     try {
-        const {email, password} = req.body
+        const { email, password } = req.body
 
-        const user = await userModel.findOne({email})
+        const user = await userModel.findOne({ email })
 
-        if(!user){
+        if (!user) {
             throw createError(404, "user with this email does not registered")
         }
 
         const isPasswordMatched = await bcrypt.compare(password, user.password)
 
-        if(!isPasswordMatched){
+        if (!isPasswordMatched) {
             throw createError(401, "wrong password")
         }
 
         // creating token and set up in cookies
-        const accessToken = createJWT({_id:user._id}, jwtAccessKey,"30m")
-        res.cookie("accessToken", accessToken,{
-            maxAge : 30*60*1000,  // expires in 30 minutes
-            httpOnly : true,
-            secure : true,
-            sameSite : "none"
+        const accessToken = createJWT({ _id: user._id }, jwtAccessKey, "30m")
+        res.cookie("accessToken", accessToken, {
+            maxAge: 1 * 60 * 1000,  // expires in 30 minutes
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
         })
 
         return successResponse(res, {
-            statusCode : 200,
-            message : "user logged in successfully",
-            payload : {user}
+            statusCode: 200,
+            message: "user logged in successfully",
         })
     } catch (error) {
         next(error)
@@ -43,12 +42,12 @@ const handleLogin = async(req,res,next)=>{
 }
 
 // user logout
-const handleLogout = async(req,res,next)=>{
+const handleLogout = async (req, res, next) => {
     try {
         res.clearCookie("accessToken")
         return successResponse(res, {
-            statusCode : 200,
-            message : "user logged out successfully",
+            statusCode: 200,
+            message: "user logged out successfully",
         })
     } catch (error) {
         next(error)

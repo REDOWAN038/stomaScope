@@ -6,10 +6,11 @@ import History from "./pages/History/History"
 import PageNotFound from "./pages/PageNotFound"
 import SignIn from "./pages/Auth/SignIn"
 import SignUp from "./pages/Auth/SignUp"
+import { AuthContextProvider } from "./context/authContext"
 
 function App() {
   return (
-    <>
+    <AuthContextProvider>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
@@ -19,7 +20,7 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-    </>
+    </AuthContextProvider>
   );
 }
 
