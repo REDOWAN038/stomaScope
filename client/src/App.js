@@ -4,8 +4,8 @@ import Detect from "./pages/Detect"
 import FAQs from "./pages/FAQs"
 import History from "./pages/History/History"
 import PageNotFound from "./pages/PageNotFound"
-import SignIn from "./pages/SignIn"
-import SignUp from "./pages/SignUp"
+import SignIn from "./pages/Auth/SignIn"
+import SignUp from "./pages/Auth/SignUp"
 
 function App() {
   return (
