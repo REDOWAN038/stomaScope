@@ -13,7 +13,7 @@ const SignIn = () => {
                 </div>
 
                 <form action="" method="post" className="userform">
-                    <h2>Sign In</h2>
+                    <h2 className='font-semibold'>Sign In</h2>
 
                     <div className="input-group">
                         <input type="email" required />
