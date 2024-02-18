@@ -7,3 +7,8 @@
 *{
   font-family: 'Poppins', sans-serif;
 }
+
+.header-navlink {
+  color: inherit;
+  text-decoration: none;
+}
