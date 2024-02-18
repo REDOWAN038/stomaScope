@@ -23,18 +23,14 @@ app.use(morgan("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(limiter)
-app.use(cors({
-    credentials: true,
-    origin: "http://localhost:8000"
-}))
-// app.use((req, res, next) => {
-//     const origin = req.headers.origin;
-//     res.setHeader('Access-Control-Allow-Origin', origin); // Allow requests from any origin
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
-//     next();
-// });
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    res.setHeader('Access-Control-Allow-Origin', origin); // Allow requests from any origin
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
+    next();
+});
 app.use(cookieParser())
 
 // routes
