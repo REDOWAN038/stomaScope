@@ -1,0 +1,22 @@
+.history{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.history h1{
+    text-align: center;
+    color: #171717;
+    font-size: 30px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.history-items{
+    margin: 20px 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    row-gap: 80px;
+}
