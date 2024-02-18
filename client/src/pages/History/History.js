@@ -1,19 +1,21 @@
 import React from 'react'
 import Layout from "../../components/Layout/Layout"
-import "./history.css"
 import datas from "./data.js"
 import Item from '../../components/Items/Item'
 
 const History = () => {
     return (
         <Layout>
-            <div className='history'>
-                <h1>Your History</h1>
-                <div className="history-items">
+            <div className='flex flex-col justify-center items-center mt-20'>
+                <h1 className='font-semibold text-2xl tracking-wide my-6'>Your History</h1>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-large'>
                     {
-                        datas.map((data, idx) => {
-                            return <Item key={idx} id={data.id} image={data.image} title={data.title} count={data.count} />
-                        })
+                        datas.map((val, index) => (
+                            <Item
+                                key={index}
+                                {...val}
+                            />
+                        ))
                     }
                 </div>
             </div>
