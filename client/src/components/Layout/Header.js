@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom"
 import { Menu } from '@material-ui/icons'
+import "../../css/tailwind.css"
 
 const Header = () => {
   return (
