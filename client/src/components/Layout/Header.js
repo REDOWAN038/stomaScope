@@ -28,8 +28,8 @@ const Header = () => {
                         <li><button className="bg-sgreen-100 border-2 border-sgreen-100 text-sm text-white px-3 py-2 rounded-md">Sign In</button></li>
                         <li><button className="bg-white border-2 border-black text-sm text-black px-3 py-2 rounded-md">Sign Up</button></li>
                     </ul>
-                    <div className='md:hidden'><Menu /></div>
                 </div>
+                <div className='md:hidden'><Menu /></div>
             </nav>
         </header>
     )
