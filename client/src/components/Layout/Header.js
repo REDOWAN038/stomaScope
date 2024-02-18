@@ -9,7 +9,7 @@ const Header = () => {
         return location.pathname === path ? "border-b-2 border-sgreen-100 text-sgreen-100" : ""
     }
     return (
-        <header className="w-screen h-20 flex justify-center items-center shadow-md" id="header">
+        <header className="bg-white w-screen h-20 flex justify-center items-center shadow-md fixed top-0 z-10" id="header">
             <nav className="w-full flex justify-between items-center px-9 lg:w-large">
                 <NavLink to="/" className="nav__logo header-navlink">
                     <i class="fa-solid fa-leaf text-sgreen-100"></i><span className='ml-2 uppercase font-extrabold text-sm'> stomascope</span>
