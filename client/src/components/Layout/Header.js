@@ -22,7 +22,7 @@ const Header = () => {
                 <div className='flex gap-10'>
                     <ul className='md:flex gap-10 hidden'>
                         <li><NavLink to="/" className={`header-navlink hover:decoration-sgreen-100 hover:decoration-2  hover:text-sgreen-100 ${isActive('/')}`}>Home</NavLink></li>
-                        <li><NavLink className={`header-navlink hover:decoration-sgreen-100 hover:decoration-2  hover:text-sgreen-100 ${isActive('/detect')}`}>Detect</NavLink></li>
+                        <li><NavLink to="/detect" className={`header-navlink hover:decoration-sgreen-100 hover:decoration-2  hover:text-sgreen-100 ${isActive('/detect')}`}>Detect</NavLink></li>
                         <li><NavLink to="/history" className={`header-navlink hover:decoration-sgreen-100 hover:decoration-2  hover:text-sgreen-100 ${isActive('/history')}`}>History</NavLink></li>
                         <li><NavLink className={`header-navlink hover:decoration-sgreen-100 hover:decoration-2  hover:text-sgreen-100 ${isActive('/faqs')}`}>FAQs</NavLink></li>
                         <li><NavLink className='header-navlink  hover:decoration-sgreen-100 hover:decoration-2  hover:text-sgreen-100'>Contact Us</NavLink></li>

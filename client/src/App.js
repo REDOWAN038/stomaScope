@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
-import Detect from "./pages/Detect"
+import Detect from "./pages/Detect/Detect"
 import FAQs from "./pages/FAQs"
 import History from "./pages/History/History"
 import PageNotFound from "./pages/PageNotFound"
