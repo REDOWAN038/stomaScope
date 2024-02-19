@@ -26,6 +26,6 @@ module.exports = {
     cloudName,
     cloudApiKey,
     cloudSecretKey,
-    modelPath, 
+    modelPath,
     imageProcessPath
 }

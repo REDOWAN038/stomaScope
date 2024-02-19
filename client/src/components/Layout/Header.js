@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import { Menu } from '@material-ui/icons'
 import "../../css/tailwind.css"
+import AuthContext from '../../context/authContext'
+import Auth from '../Group/Auth'
+import Logout from '../Group/Logout'
 
 const Header = () => {
+    const { user } = useContext(AuthContext)
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -26,10 +30,11 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className='flex gap-10'>
-                    <ul className='md:flex gap-3 hidden'>
-                        <li><button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs lg:text-base text-white px-3 py-1 rounded-full" onClick={() => navigate("/signin")}><NavLink to='/signin'>Sign In</NavLink></button></li>
-                        <li><button className="bg-white border-2 border-black text-xs lg:text-base text-black px-3 py-1 rounded-full" onClick={() => navigate("/signup")}><NavLink to='/signup'>Sign Up</NavLink></button></li>
-                    </ul>
+
+                    {
+                        user ? <Auth /> : <Logout />
+                    }
+                    
                 </div>
                 <div className='md:hidden'><Menu /></div>
             </nav>
