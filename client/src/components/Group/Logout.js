@@ -1,20 +1,19 @@
-import React, { useContext } from 'react'
 import axios from "axios"
-import AuthContext from '../../context/authContext'
+import { useContext } from "react"
+import AuthContext from "../../context/authContext"
 
 const Logout = () => {
-    const { setUser } = useContext(AuthContext)
-
+    const { setLoggedUser } = useContext(AuthContext)
     const handleLogout = async () => {
         try {
-            const response = await axios.get(
-                `${process.env.REACT_APP_API}/api/v1/auth/logout`,
+            const response = await axios.post(
+                `${process.env.REACT_APP_API}/api/v1/auth/logout`, {},
                 { withCredentials: true }
             )
 
             if (response?.data?.success) {
                 localStorage.removeItem("user")
-                console.log("hey");
+                setLoggedUser(null)
                 window.location.reload();
             }
         } catch (error) {

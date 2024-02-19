@@ -15,49 +15,11 @@ export const AuthContextProvider = ({ children }) => {
         }
     })
 
-    const signinApiCall = async (email, password) => {
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`,
-                {
-                    email,
-                    password,
-                },
-                {
-                    withCredentials: true,
-                }
-            )
-
-            if (res?.data?.success) {
-                const apiResponse = await axios.get(
-                    `${process.env.REACT_APP_API}/api/v1/users/profile`,
-                    { withCredentials: true }
-                )
-
-                if (apiResponse?.data?.success) {
-                    setUser(apiResponse.data.payload)
-                    localStorage.setItem("user", JSON.stringify(apiResponse.data.payload))
-                }
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
+    const setLoggedUser = (props) => {
+        setUser(props)
     }
 
-    const logoutApiCall = async () => {
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/logout`,
-                { withCredentials: true }
-            )
-
-            console.log(res);
-            localStorage.removeItem("user")
-            setUser(null)
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    return <AuthContext.Provider value={{ user, signinApiCall, logoutApiCall }}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{ user, setLoggedUser }}>{children}</AuthContext.Provider>
 }
 
 

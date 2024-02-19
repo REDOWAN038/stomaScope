@@ -4,17 +4,41 @@ import Microscope from "../../img/img3c.png"
 import { NavLink, useNavigate } from "react-router-dom"
 import "./auth.css"
 import AuthContext from '../../context/authContext'
+import axios from "axios"
 
 const SignIn = () => {
     const navigate = useNavigate()
-    const email = useRef(null)
-    const password = useRef(null)
-    const { signinApiCall } = useContext(AuthContext)
+    const emailRef = useRef(null)
+    const passwordRef = useRef(null)
+    const { setLoggedUser } = useContext(AuthContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await signinApiCall(email.current.value, password.current.value)
+            const email = emailRef.current.value
+            const password = passwordRef.current.value
+
+            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`,
+                {
+                    email,
+                    password,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+
+            if (res?.data?.success) {
+                const apiResponse = await axios.get(
+                    `${process.env.REACT_APP_API}/api/v1/users/profile`,
+                    { withCredentials: true }
+                )
+
+                if (apiResponse?.data?.success) {
+                    setLoggedUser(apiResponse.data.payload)
+                    localStorage.setItem("user", JSON.stringify(apiResponse.data.payload))
+                }
+            }
             navigate("/")
         } catch (error) {
             console.log(error);
@@ -22,7 +46,7 @@ const SignIn = () => {
     }
 
     useEffect(() => {
-        email.current.focus()
+        emailRef.current.focus()
     }, [])
     return (
         <Layout>
@@ -36,12 +60,12 @@ const SignIn = () => {
                     <h2>Sign In</h2>
 
                     <div className="input-group">
-                        <input type="email" ref={email} required />
+                        <input type="email" ref={emailRef} required />
                         <label for="">Email</label>
                     </div>
 
                     <div className="input-group">
-                        <input type="password" ref={password} required />
+                        <input type="password" ref={passwordRef} required />
                         <label for="">Password</label>
                     </div>
 
