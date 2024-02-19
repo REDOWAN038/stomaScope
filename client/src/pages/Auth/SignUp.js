@@ -14,7 +14,7 @@ const SignUp = () => {
                 </div>
 
                 <form action="" className="userform">
-                    <h2>Sign Up</h2>
+                    <h2 className='font-semibold'>Sign Up</h2>
                     <div className="input-group">
                         <input type="text" required />
                         <label for="">Full Name</label>
@@ -29,8 +29,7 @@ const SignUp = () => {
                     </div>
                     <div className="remember">
                         <label
-                        ><input type="checkbox" /> I agree to the terms & conditions</label
-                        >
+                        ><input type="checkbox" /> I agree to the terms & conditions</label>
                     </div>
                     <button type="submit" className="button">Sign Up</button>
                     <div className="signUp-link">
