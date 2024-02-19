@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { NavLink, useLocation, useNavigate } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import { Menu } from '@material-ui/icons'
 import "../../css/tailwind.css"
 import AuthContext from '../../context/authContext'
@@ -9,7 +9,6 @@ import Logout from '../Group/Logout'
 const Header = () => {
     const { user } = useContext(AuthContext)
     const location = useLocation()
-    const navigate = useNavigate()
 
     const isActive = (path) => {
         return location.pathname === path ? "border-b-2 border-sgreen-100 text-sgreen-100" : ""
@@ -32,9 +31,9 @@ const Header = () => {
                 <div className='flex gap-10'>
 
                     {
-                        user ? <Auth /> : <Logout />
+                        !user ? <Auth /> : <Logout />
                     }
-                    
+
                 </div>
                 <div className='md:hidden'><Menu /></div>
             </nav>

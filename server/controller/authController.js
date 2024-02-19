@@ -28,8 +28,8 @@ const handleLogin = async (req, res, next) => {
         res.cookie("accessToken", accessToken, {
             maxAge: 30 * 60 * 1000,  // expires in 30 minutes
             httpOnly: true,
-            secure: true,
-            sameSite: "none"
+            // secure: true,
+            // sameSite: "none"
         })
 
         return successResponse(res, {

@@ -2,18 +2,18 @@ const createError = require("http-errors")
 const jwt = require("jsonwebtoken")
 const { jwtAccessKey } = require("../src/secret")
 
-const isLoggedIn = async(req,res,next)=>{
+const isLoggedIn = async (req, res, next) => {
     try {
         const token = req.cookies.accessToken
-        if(!token){
+        if (!token) {
             throw createError(401, "user is not logged in")
         }
 
         const decoded = jwt.verify(token, jwtAccessKey)
-        if(!decoded){
+        if (!decoded) {
             throw createError(401, "invalid token")
         }
-        
+
         req.body.userId = decoded._id
         next()
     } catch (error) {
@@ -21,13 +21,13 @@ const isLoggedIn = async(req,res,next)=>{
     }
 }
 
-const isLoggedOut = async(req,res,next)=>{
+const isLoggedOut = async (req, res, next) => {
     try {
         const token = req.cookies.accessToken
-        if(token){
+        if (token) {
             try {
                 const decoded = jwt.verify(token, jwtAccessKey)
-                if(decoded){
+                if (decoded) {
                     throw createError(400, "user already logged in")
                 }
             } catch (error) {

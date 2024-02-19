@@ -7,6 +7,6 @@ const router = express.Router()
 router.post("/login", isLoggedOut, handleLogin)
 
 // user logout
-router.post("/logout", isLoggedIn, handleLogout)
+router.get("/logout", isLoggedIn, handleLogout)
 
 module.exports = router

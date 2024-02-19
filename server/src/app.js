@@ -19,19 +19,19 @@ const limiter = rateLimit({
 })
 
 // middlewares
-app.use(morgan("dev"))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(limiter)
 app.use((req, res, next) => {
     const origin = req.headers.origin;
     res.setHeader('Access-Control-Allow-Origin', origin); // Allow requests from any origin
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
     next();
 });
 app.use(cookieParser())
+app.use(morgan("dev"))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+// app.use(limiter)
 
 // routes
 app.use("/api/v1/users", userRoutes)
