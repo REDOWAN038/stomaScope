@@ -1,0 +1,41 @@
+/* Modal */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 56px; /* Adjusted to account for the header height */
+  width: 100%;
+  height: calc(100% - 56px); /* Adjusted to subtract header height */
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9); /* Black background with transparency */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  /* margin: auto;
+  margin-top: 30px; */
+  display: block;
+  max-width: 60%;
+  max-height: calc(100% - 160px);
+}
+
+/* Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #ccc;
+  text-decoration: none;
+  cursor: pointer;
+}

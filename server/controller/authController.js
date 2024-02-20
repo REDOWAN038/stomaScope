@@ -24,9 +24,9 @@ const handleLogin = async (req, res, next) => {
         }
 
         // creating token and set up in cookies
-        const accessToken = createJWT({ _id: user._id }, jwtAccessKey, "30m")
+        const accessToken = createJWT({ _id: user._id }, jwtAccessKey, "1h")
         res.cookie("accessToken", accessToken, {
-            maxAge: 30 * 60 * 1000,  // expires in 30 minutes
+            maxAge: 60 * 60 * 1000,  // expires in 30 minutes
             httpOnly: true,
             // secure: true,
             // sameSite: "none"

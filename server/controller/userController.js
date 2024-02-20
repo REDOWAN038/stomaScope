@@ -129,7 +129,7 @@ const getUserUploadHistory = async (req, res, next) => {
             payload: {
                 history: history,
                 currentPage: page,
-                totalPages: Math.ceil(total / limit)
+                total: total
             }
         })
     } catch (error) {
