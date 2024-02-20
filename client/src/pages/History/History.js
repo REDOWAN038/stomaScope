@@ -36,6 +36,10 @@ const History = () => {
         setFullImage(item.image)
     }
 
+    const handleOptionsClick = (item) => {
+        alert("done")
+    }
+
     const handleCloseModal = () => {
         setFullImage("");
     };
@@ -62,6 +66,7 @@ const History = () => {
                                     key={index}
                                     item={item}
                                     onImageClick={showFullImage}
+                                    onDotsClick={handleOptionsClick}
                                 />
                             ))
                         }
