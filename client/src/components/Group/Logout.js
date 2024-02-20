@@ -1,9 +1,12 @@
 import axios from "axios"
 import { useContext } from "react"
 import AuthContext from "../../context/authContext"
+import { useNavigate } from "react-router-dom"
 
 const Logout = () => {
     const { setLoggedUser } = useContext(AuthContext)
+    const navigate = useNavigate()
+
     const handleLogout = async () => {
         try {
             const response = await axios.post(
@@ -14,7 +17,7 @@ const Logout = () => {
             if (response?.data?.success) {
                 localStorage.removeItem("user")
                 setLoggedUser(null)
-                window.location.reload();
+                navigate("/api/v1/users/signin/")
             }
         } catch (error) {
             console.log(error);

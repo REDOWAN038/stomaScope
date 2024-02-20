@@ -48,7 +48,7 @@ const History = () => {
     return (
         <Layout>
             <div className='flex flex-col justify-center items-center'>
-                <h1 className='font-semibold text-2xl tracking-wide my-6'>Your History</h1>
+                <h1 className='font-semibold text-2xl tracking-wide my-6'>Your Upload History</h1>
                 <InfiniteScroll
                     dataLength={data.length}
                     next={getUserHistory}
@@ -68,11 +68,6 @@ const History = () => {
                     </div>
                 </InfiniteScroll>
             </div>
-
-            {/* w-4/5 h-4/5 relative left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 mt-9 */}
-            {/* <div className='full-image-overlay'>
-                <img src={fullImage} alt="" />
-            </div> */}
 
             {
                 fullImage && (

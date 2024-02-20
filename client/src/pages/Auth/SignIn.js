@@ -39,7 +39,7 @@ const SignIn = () => {
                     localStorage.setItem("user", JSON.stringify(apiResponse.data.payload))
                 }
             }
-            navigate("/")
+            navigate("/api/v1/")
         } catch (error) {
             console.log(error);
         }
@@ -57,7 +57,7 @@ const SignIn = () => {
 
 
                 <form method="post" className="userform" onSubmit={handleSubmit}>
-                    <h2>Sign In</h2>
+                    <h2 className='font-semibold'>Sign In</h2>
 
                     <div className="input-group">
                         <input type="email" ref={emailRef} required />
@@ -78,7 +78,7 @@ const SignIn = () => {
                     <div className="signUp-link">
                         <p>
                             Don't have an account?
-                            <NavLink to="/signup" className="signUpBtn-link">Sign Up</NavLink>
+                            <NavLink to="/api/v1/users/signup" className="signUpBtn-link">Sign Up</NavLink>
                         </p>
                     </div>
 

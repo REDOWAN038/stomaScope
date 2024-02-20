@@ -13,20 +13,15 @@ const cloudinary = require("../config/cloudinary")
 // register a user
 const registerUser = async (req, res, next) => {
     try {
-        const { name, email, password, phone } = req.body
+        const { name, email, password } = req.body
 
-        const existingUser = await userModel.findOne({
-            $or: [
-                { email },
-                { phone }
-            ]
-        })
+        const existingUser = await userModel.findOne({ email })
 
         if (existingUser) {
-            throw createError(409, "user already exists by this mail or phone")
+            throw createError(409, "user already exists by this mail")
         }
 
-        const newUser = { name, email, password, phone }
+        const newUser = { name, email, password }
 
         const token = createJWT(newUser, jwtActivationKey, "10m")
 
@@ -40,7 +35,7 @@ const registerUser = async (req, res, next) => {
         }
 
         try {
-            // await sendingMail(emailData)
+            await sendingMail(emailData)
 
         } catch (error) {
             createError(500, "failed to send activation email")
@@ -51,7 +46,6 @@ const registerUser = async (req, res, next) => {
         return successResponse(res, {
             statusCode: 200,
             message: "please check your email",
-            payload: { token }
         })
     } catch (error) {
         next(error)

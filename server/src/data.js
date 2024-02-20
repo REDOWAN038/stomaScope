@@ -1,35 +1,30 @@
 const data = {
-    users:[
+    users: [
         {
-            name : "red1",
-            email : "abc@gmail.com",
-            password : "1234",
-            phone : "01234567891",
+            name: "red1",
+            email: "abc@gmail.com",
+            password: "1234",
         },
         {
-            name : "ibrahim",
-            email : "abcd@gmail.com",
-            password : "1234",
-            phone : "01234567892",
+            name: "ibrahim",
+            email: "abcd@gmail.com",
+            password: "1234",
         },
         {
-            name : "talukder",
-            email : "abcde@gmail.com",
-            password : "1234",
-            phone : "01234567893",
+            name: "talukder",
+            email: "abcde@gmail.com",
+            password: "1234",
         },
         {
-            name : "mojumder",
-            email : "bcd@gmail.com",
-            password : "1234",
-            phone : "01234567894",
+            name: "mojumder",
+            email: "bcd@gmail.com",
+            password: "1234",
         },
         {
-            name : "admin",
-            email : "admin@gmail.com",
-            password : "admin",
-            phone : "01234567890",
-            isAdmin:true,
+            name: "admin",
+            email: "admin@gmail.com",
+            password: "admin",
+            isAdmin: true,
         },
     ]
 }

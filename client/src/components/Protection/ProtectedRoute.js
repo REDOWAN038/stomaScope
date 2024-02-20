@@ -8,13 +8,13 @@ const ProtectedRoute = ({ children, accessBy }) => {
         if (!user) {
             return children
         } else {
-            return <Navigate to="/"></Navigate>
+            return <Navigate to="/api/v1/"></Navigate>
         }
     } else if (accessBy === "authorized") {
         if (user) {
             return children
         } else {
-            return <Navigate to="/signin"></Navigate>
+            return <Navigate to="/api/v1/users/signin"></Navigate>
         }
     }
 }
