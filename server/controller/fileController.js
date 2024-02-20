@@ -38,6 +38,7 @@ const handleDeleteFile = async (req, res, next) => {
     try {
         const { userId } = req.body
         const { id } = req.params
+        console.log(id);
         const existingFile = await fileModel.findById(id)
 
         if (!existingFile) {

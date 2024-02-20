@@ -36,8 +36,20 @@ const History = () => {
         setFullImage(item.image)
     }
 
-    const handleOptionsClick = (item) => {
-        alert("done")
+    const handleDelete = async (item) => {
+        const isConfirmed = window.confirm('Are you sure you want to delete this image?')
+        if (isConfirmed) {
+            try {
+                const id = item._id
+                const res = await axios.delete(`${process.env.REACT_APP_API}/api/v1/file/delete/${id}`, { withCredentials: true })
+
+                if (res?.data?.success) {
+                    window.location.reload()
+                }
+            } catch (error) {
+
+            }
+        }
     }
 
     const handleCloseModal = () => {
@@ -66,7 +78,7 @@ const History = () => {
                                     key={index}
                                     item={item}
                                     onImageClick={showFullImage}
-                                    onDotsClick={handleOptionsClick}
+                                    onDelete={handleDelete}
                                 />
                             ))
                         }
