@@ -13,7 +13,7 @@ const History = () => {
 
     const getUserHistory = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API}/api/v1/users/upload-history`, {
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/users/upload-history`, {
                 params: {
                     page: currentPage
                 },
@@ -36,12 +36,16 @@ const History = () => {
         setFullImage(item.image)
     }
 
+    const handleCloseModal = () => {
+        setFullImage("");
+    };
+
     const handleDelete = async (item) => {
         const isConfirmed = window.confirm('Are you sure you want to delete this image?')
         if (isConfirmed) {
             try {
                 const id = item._id
-                const res = await axios.delete(`${process.env.REACT_APP_API}/api/v1/file/delete/${id}`, { withCredentials: true })
+                const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/delete/${id}`, { withCredentials: true })
 
                 if (res?.data?.success) {
                     window.location.reload()
@@ -51,10 +55,6 @@ const History = () => {
             }
         }
     }
-
-    const handleCloseModal = () => {
-        setFullImage("");
-    };
 
     useEffect(() => {
         getUserHistory()

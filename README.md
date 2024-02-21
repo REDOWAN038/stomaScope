@@ -63,7 +63,15 @@ Detecting stomata from a video/image
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables to your .env file
+
+To run this project, you will need to add the following environment variables to your frontend 
+.env file
+
+`REACT_APP_SERVER_URL`
+
+
+To run this project, you will need to add the following environment variables to your backend 
+.env file
 
 `PORT`
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Layout from "../../components/Layout/Layout"
 import Form from 'react-bootstrap/Form';
 import axios from "axios"
-import "./detect.css"
+import "./upload.css"
 import SyncLoader from "react-spinners/SyncLoader"
 import { saveAs } from "file-saver"
 
@@ -12,10 +12,19 @@ const Detect = () => {
     const [name, setName] = useState("")
     const [count, setCount] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [fullImage, setFullImage] = useState("")
 
     const handleDownload = () => {
         saveAs(image, name)
     }
+
+    const showFullImage = () => {
+        setFullImage(image)
+    }
+
+    const handleCloseModal = () => {
+        setFullImage("");
+    };
 
     const uploadImage = async (e) => {
         // e.preventDefault()
@@ -28,7 +37,7 @@ const Detect = () => {
             formData.append("name", name)
             formData.append("image", file)
 
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/file/upload`,
+            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/upload`,
                 formData, { withCredentials: true }
             )
 
@@ -67,15 +76,24 @@ const Detect = () => {
                     image && (
                         <div className='preview'>
                             <h1 className='height'>Stomata Count : {count}</h1>
-                            <img src={image} alt="" className='image' />
+                            <img src={image} alt="" className='image' onClick={() => showFullImage()} />
                             {/* <div className='flex justify-center	items-center mt-3'> */}
                             <button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-2" onClick={() => handleDownload()}>Download</button>
                             {/* </div> */}
                         </div>
                     )
                 }
-
             </div>
+
+            {
+                fullImage && (
+                    <div className="modal" >
+                        <span className="close" onClick={handleCloseModal}>&times;</span>
+                        {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+                        <img className="modal-content" src={fullImage} alt="Full Image" />
+                    </div>
+                )
+            }
         </Layout>
     )
 }

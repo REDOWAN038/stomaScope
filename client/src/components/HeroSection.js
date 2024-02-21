@@ -1,5 +1,5 @@
 import React from "react";
-import Poster from '../img/home.png'
+import Poster from '../img/img3c.png'
 import "../css/tailwind.css"
 
 const HeroSection = () => {

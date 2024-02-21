@@ -1,3 +1,23 @@
+.preview{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.height{
+    margin-top: 10px;
+    font-style: bold;
+}
+
+.image{
+    margin-top: 10px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 /* Modal */
 .modal {
   display: flex;
@@ -36,4 +56,8 @@
   color: #ccc;
   text-decoration: none;
   cursor: pointer;
+}
+
+.image:hover{
+    cursor: pointer;
 }

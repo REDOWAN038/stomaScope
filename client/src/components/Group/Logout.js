@@ -10,14 +10,14 @@ const Logout = () => {
     const handleLogout = async () => {
         try {
             const response = await axios.post(
-                `${process.env.REACT_APP_API}/api/v1/auth/logout`, {},
+                `${process.env.REACT_APP_SERVER_URL}/api/v1/auth/logout`, {},
                 { withCredentials: true }
             )
 
             if (response?.data?.success) {
                 localStorage.removeItem("user")
                 setLoggedUser(null)
-                navigate("/api/v1/users/signin/")
+                navigate("/users/signin/")
             }
         } catch (error) {
             console.log(error);

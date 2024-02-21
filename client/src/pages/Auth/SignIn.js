@@ -18,7 +18,7 @@ const SignIn = () => {
             const email = emailRef.current.value
             const password = passwordRef.current.value
 
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`,
+            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/auth/login`,
                 {
                     email,
                     password,
@@ -30,7 +30,7 @@ const SignIn = () => {
 
             if (res?.data?.success) {
                 const apiResponse = await axios.get(
-                    `${process.env.REACT_APP_API}/api/v1/users/profile`,
+                    `${process.env.REACT_APP_SERVER_URL}/api/v1/users/profile`,
                     { withCredentials: true }
                 )
 
@@ -39,7 +39,7 @@ const SignIn = () => {
                     localStorage.setItem("user", JSON.stringify(apiResponse.data.payload))
                 }
             }
-            navigate("/api/v1/")
+            navigate("/")
         } catch (error) {
             console.log(error);
         }
@@ -78,7 +78,7 @@ const SignIn = () => {
                     <div className="signUp-link">
                         <p>
                             Don't have an account?
-                            <NavLink to="/api/v1/users/signup" className="signUpBtn-link">Sign Up</NavLink>
+                            <NavLink to="/users/signup" className="signUpBtn-link">Sign Up</NavLink>
                         </p>
                     </div>
 

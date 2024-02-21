@@ -19,7 +19,7 @@ const SignUp = () => {
             const email = emailRef.current.value
             const password = passwordRef.current.value
 
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/users/register`,
+            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/users/register`,
                 {
                     name,
                     email,
@@ -32,7 +32,7 @@ const SignUp = () => {
 
             if (res?.data?.success) {
                 alert(res?.data?.message)
-                navigate("/api/v1/users/signin")
+                navigate("/users/signin")
             }
         } catch (error) {
 
@@ -68,7 +68,7 @@ const SignUp = () => {
                     <div className="signUp-link">
                         <p>
                             Already have an account?
-                            <NavLink to="/api/v1/users/signin" className="signInBtn-link">Sign In</NavLink>
+                            <NavLink to="/users/signin" className="signInBtn-link">Sign In</NavLink>
                         </p>
                     </div>
                 </form>

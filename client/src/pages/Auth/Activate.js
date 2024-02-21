@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../components/Layout/Layout'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import SyncLoader from "react-spinners/SyncLoader"
+
 
 const Activate = () => {
+    const [loading, setLoading] = useState(false)
     const { token } = useParams()
     const navigate = useNavigate()
 
     const activateUser = async () => {
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/users/activate`,
+            setLoading(true)
+            const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/users/activate`,
                 {
                     token
                 },
@@ -19,9 +23,11 @@ const Activate = () => {
             )
 
             if (res?.data?.success) {
-                navigate("/api/v1/users/signin")
+                setLoading(false)
+                navigate("/users/signin")
             }
         } catch (error) {
+            setLoading(false)
             console.log(error);
         }
     }
@@ -33,7 +39,13 @@ const Activate = () => {
 
     return (
         <Layout>
-            <h1 className='text-center mt-5'>Activation is in process....</h1>
+            <div className='flex justify-center	items-center'>
+                <h1 className='mt-5 text-lg'>Please Wait....</h1>
+                <SyncLoader
+                    loading={loading}
+                    color='#3E6553'
+                />
+            </div>
         </Layout>
     )
 }

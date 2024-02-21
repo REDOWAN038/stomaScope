@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
-import Detect from "./pages/Detect/Detect"
+import Upload from "./pages/Upload/Upload"
 import FAQs from "./pages/FAQs"
 import History from "./pages/History/History"
 import PageNotFound from "./pages/PageNotFound"
@@ -14,29 +14,29 @@ function App() {
     return (
         <AuthContextProvider>
             <Routes>
-                <Route path="/api/v1/" element={<Home />} />
-                <Route path="/api/v1/faqs" element={<FAQs />} />
-                <Route path="/api/v1/users/signin" element={
+                <Route path="/" element={<Home />} />
+                <Route path="/faqs" element={<FAQs />} />
+                <Route path="/users/signin" element={
                     <ProtectedRoute accessBy="unauthorized">
                         <SignIn />
                     </ProtectedRoute>}
                 />
-                <Route path="/api/v1/users/signup" element={
+                <Route path="/users/signup" element={
                     <ProtectedRoute accessBy="unauthorized">
                         <SignUp />
                     </ProtectedRoute>}
                 />
-                <Route path="/api/v1/users/activate/:token" element={
+                <Route path="/users/activate/:token" element={
                     <ProtectedRoute accessBy="unauthorized">
                         <Activate />
                     </ProtectedRoute>}
                 />
-                <Route path="/api/v1/users/detect" element={
+                <Route path="/users/upload" element={
                     <ProtectedRoute accessBy="authorized">
-                        <Detect />
+                        <Upload />
                     </ProtectedRoute>}
                 />
-                <Route path="/api/v1/users/history" element={
+                <Route path="/users/history" element={
                     <ProtectedRoute accessBy="authorized">
                         <History />
                     </ProtectedRoute>}
