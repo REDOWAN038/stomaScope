@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Layout from "../../components/Layout/Layout"
-import Item from '../../components/Items/Item'
+import Item from '../../components/Utils/Item'
 import axios from "axios"
 import InfiniteScroll from "react-infinite-scroll-component"
 import "./history.css"
+import { message } from "antd"
+
 
 const History = () => {
     const [data, setData] = useState([])
@@ -28,7 +30,7 @@ const History = () => {
                 setTotal(res?.data?.payload?.total)
             }
         } catch (error) {
-            console.log(error);
+            message.error("check your internet connection.")
         }
     }
 
@@ -48,10 +50,11 @@ const History = () => {
                 const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/delete/${id}`, { withCredentials: true })
 
                 if (res?.data?.success) {
+                    message.success(`${item.name} deleted`)
                     window.location.reload()
                 }
             } catch (error) {
-
+                message.error("something went wrong. try again...")
             }
         }
     }

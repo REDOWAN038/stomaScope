@@ -1,9 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Layout from "../../components/Layout/Layout"
 import Microscope from "../../img/img3c.png"
 import "./auth.css"
 import { NavLink, useNavigate } from "react-router-dom"
 import axios from 'axios'
+import { message } from "antd"
 
 
 const SignUp = () => {
@@ -31,20 +32,24 @@ const SignUp = () => {
             )
 
             if (res?.data?.success) {
-                alert(res?.data?.message)
+                message.info(res?.data?.message)
                 navigate("/users/signin")
             }
         } catch (error) {
             if (error?.response?.status === 409) {
-                alert(error?.response?.data?.message);
+                message.info(error?.response?.data?.message);
                 navigate("/users/signin")
             } else if (error?.response?.status === 500) {
-                alert(error?.response?.data?.message);
+                message.error(error?.response?.data?.message);
             } else {
-                alert("check your network connection")
+                message.error("check your network connection")
             }
         }
     }
+
+    useEffect(() => {
+        nameRef.current.focus()
+    }, [])
 
     return (
         <Layout>

@@ -1,10 +1,11 @@
 import React from "react";
-import Poster from '../img/img3c.png'
-import "../css/tailwind.css"
+import Poster from '../../img/img3c.png'
+import "../../css/tailwind.css"
 
 const HeroSection = () => {
     return (
         <section className="flex flex-col md:flex-row-reverse justify-center md:justify-between items-center my-5 lg:w-large lg:mx-auto md:mt-20 lg:mt-32" id="home">
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <img src={Poster} className="w-52 md:w-64 md:mr-8 lg:w-1/3" />
             <div className="w-fit md:w-96 mx-6 my-6 md:ml-8 lg:w-1/2">
                 <div className="font-semibold text-3xl lg:text-5xl tracking-wide w-96 lg:w-full">

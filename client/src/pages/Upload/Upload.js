@@ -5,8 +5,10 @@ import axios from "axios"
 import "./upload.css"
 import SyncLoader from "react-spinners/SyncLoader"
 import { saveAs } from "file-saver"
+import { message } from "antd"
 
-const Detect = () => {
+
+const Upload = () => {
     const [file, setFile] = useState("")
     const [image, setImage] = useState("")
     const [name, setName] = useState("")
@@ -16,6 +18,7 @@ const Detect = () => {
 
     const handleDownload = () => {
         saveAs(image, name)
+        message.success(`${name} downloaded`)
     }
 
     const showFullImage = () => {
@@ -27,7 +30,6 @@ const Detect = () => {
     };
 
     const uploadImage = async (e) => {
-        // e.preventDefault()
         try {
             setLoading(true)
             setImage("")
@@ -43,13 +45,14 @@ const Detect = () => {
 
             if (res?.data?.success) {
                 setLoading(false)
+                message.success("stomata detection completed")
                 setImage(res?.data?.payload?.file?.image)
                 setCount(res?.data?.payload?.file?.count)
                 setName(res?.data?.payload?.file?.name)
             }
         } catch (error) {
             setLoading(false)
-            console.log(error);
+            message.error("something went wrong...")
         }
     }
 
@@ -98,4 +101,4 @@ const Detect = () => {
     )
 }
 
-export default Detect
+export default Upload

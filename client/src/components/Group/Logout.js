@@ -2,6 +2,8 @@ import axios from "axios"
 import { useContext } from "react"
 import AuthContext from "../../context/authContext"
 import { useNavigate } from "react-router-dom"
+import { message } from "antd"
+
 
 const Logout = () => {
     const { setLoggedUser } = useContext(AuthContext)
@@ -17,11 +19,11 @@ const Logout = () => {
             if (response?.data?.success) {
                 localStorage.removeItem("user")
                 setLoggedUser(null)
-                alert(response?.data?.message)
+                message.success(response?.data?.message)
                 navigate("/users/signin/")
             }
         } catch (error) {
-            alert("something went wrong. try again!!!")
+            message.error("something went wrong. try again!!!")
         }
     }
 

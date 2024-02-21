@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import { MoreVert } from '@material-ui/icons';
 import { saveAs } from "file-saver"
+import { message } from "antd"
+
 
 const Item = ({ item, onImageClick, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false)
 
     const handleDownload = () => {
         saveAs(item.image, item.name)
+        message.success(`${item.name} downloaded`)
+        setShowDropdown(false)
     }
 
     const handleImageClick = () => {

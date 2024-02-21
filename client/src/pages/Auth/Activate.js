@@ -3,6 +3,7 @@ import Layout from '../../components/Layout/Layout'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import FadeLoader from "react-spinners/FadeLoader"
+import { message } from "antd"
 
 
 const Activate = () => {
@@ -24,16 +25,16 @@ const Activate = () => {
 
             if (res?.data?.success) {
                 setLoading(false)
-                alert(res?.data?.message)
+                message.success(res?.data?.message)
                 navigate("/users/signin")
             }
         } catch (error) {
             setLoading(false)
-            if (error?.response?.status === 401) {
-                alert(error?.response?.data?.message);
+            if (error?.response?.status === 401 || error?.response?.status === 404) {
+                message.error(error?.response?.data?.message);
                 navigate("/users/signup")
             } else {
-                alert("something went wrong....")
+                message.error("something went wrong....")
             }
         }
     }

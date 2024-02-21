@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import "./auth.css"
 import AuthContext from '../../context/authContext'
 import axios from "axios"
+import { message } from "antd"
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -39,17 +40,17 @@ const SignIn = () => {
                     localStorage.setItem("user", JSON.stringify(apiResponse.data.payload))
                 }
 
-                alert(res?.data?.message)
+                message.success(res?.data?.message)
                 navigate("/")
             }
         } catch (error) {
             if (error?.response?.status === 404) {
-                alert(error?.response?.data?.message);
+                message.error(error?.response?.data?.message);
                 navigate("/users/signup")
-            }
-
-            if (error?.response?.status === 401) {
-                alert(error?.response?.data?.message);
+            } else if (error?.response?.status === 401) {
+                message.error(error?.response?.data?.message);
+            } else {
+                message.error("check your network connection")
             }
         }
     }
