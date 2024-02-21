@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home/Home"
 import Upload from "./pages/Upload/Upload"
-import FAQs from "./pages/FAQs"
+import FAQs from "./pages/FAQs/FAQs"
 import History from "./pages/History/History"
 import PageNotFound from "./pages/page_not_found/PageNotFound"
 import SignIn from "./pages/Auth/SignIn"
