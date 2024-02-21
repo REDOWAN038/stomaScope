@@ -3,8 +3,8 @@ import Layout from "../../components/Layout/Layout"
 import Item from '../../components/Utils/Item'
 import axios from "axios"
 import InfiniteScroll from "react-infinite-scroll-component"
-import "./history.css"
 import { message } from "antd"
+import FullImage from '../../components/Utils/FullImage'
 
 
 const History = () => {
@@ -90,13 +90,7 @@ const History = () => {
             </div>
 
             {
-                fullImage && (
-                    <div className="modal" >
-                        <span className="close" onClick={handleCloseModal}>&times;</span>
-                        {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-                        <img className="modal-content" src={fullImage} alt="Full Image" />
-                    </div>
-                )
+                fullImage && <FullImage image={fullImage} onClose={handleCloseModal} />
             }
         </Layout>
     )

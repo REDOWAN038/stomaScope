@@ -6,6 +6,7 @@ import "./upload.css"
 import SyncLoader from "react-spinners/SyncLoader"
 import { saveAs } from "file-saver"
 import { message } from "antd"
+import FullImage from '../../components/Utils/FullImage';
 
 
 const Upload = () => {
@@ -81,7 +82,7 @@ const Upload = () => {
                             <h1 className='height'>Stomata Count : {count}</h1>
                             <img src={image} alt="" className='image' onClick={() => showFullImage()} />
                             {/* <div className='flex justify-center	items-center mt-3'> */}
-                            <button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-2" onClick={() => handleDownload()}>Download</button>
+                            <button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-4" onClick={() => handleDownload()}>Download</button>
                             {/* </div> */}
                         </div>
                     )
@@ -89,13 +90,7 @@ const Upload = () => {
             </div>
 
             {
-                fullImage && (
-                    <div className="modal" >
-                        <span className="close" onClick={handleCloseModal}>&times;</span>
-                        {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-                        <img className="modal-content" src={fullImage} alt="Full Image" />
-                    </div>
-                )
+                fullImage && <FullImage image={fullImage} onClose={handleCloseModal} />
             }
         </Layout>
     )
