@@ -17,10 +17,11 @@ const Logout = () => {
             if (response?.data?.success) {
                 localStorage.removeItem("user")
                 setLoggedUser(null)
+                alert(response?.data?.message)
                 navigate("/users/signin/")
             }
         } catch (error) {
-            console.log(error);
+            alert("something went wrong. try again!!!")
         }
     }
 

@@ -35,7 +35,14 @@ const SignUp = () => {
                 navigate("/users/signin")
             }
         } catch (error) {
-
+            if (error?.response?.status === 409) {
+                alert(error?.response?.data?.message);
+                navigate("/users/signin")
+            } else if (error?.response?.status === 500) {
+                alert(error?.response?.data?.message);
+            } else {
+                alert("check your network connection")
+            }
         }
     }
 

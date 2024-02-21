@@ -14,13 +14,13 @@ const handleLogin = async (req, res, next) => {
         const user = await userModel.findOne({ email })
 
         if (!user) {
-            throw createError(404, "user with this email does not registered")
+            throw createError(404, "user with this email does not registered. please sign up")
         }
 
         const isPasswordMatched = await bcrypt.compare(password, user.password)
 
         if (!isPasswordMatched) {
-            throw createError(401, "wrong password")
+            throw createError(401, "wrong password. try again!!!")
         }
 
         // creating token and set up in cookies
@@ -34,7 +34,7 @@ const handleLogin = async (req, res, next) => {
 
         return successResponse(res, {
             statusCode: 200,
-            message: "user logged in successfully",
+            message: `welcome back, ${user.name}`,
         })
     } catch (error) {
         next(error)
@@ -47,7 +47,7 @@ const handleLogout = async (req, res, next) => {
         res.clearCookie("accessToken")
         return successResponse(res, {
             statusCode: 200,
-            message: "user logged out successfully",
+            message: "logged out successfully",
         })
     } catch (error) {
         next(error)

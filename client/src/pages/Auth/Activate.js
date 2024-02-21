@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Layout from '../../components/Layout/Layout'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import SyncLoader from "react-spinners/SyncLoader"
+import FadeLoader from "react-spinners/FadeLoader"
 
 
 const Activate = () => {
@@ -24,11 +24,17 @@ const Activate = () => {
 
             if (res?.data?.success) {
                 setLoading(false)
+                alert(res?.data?.message)
                 navigate("/users/signin")
             }
         } catch (error) {
             setLoading(false)
-            console.log(error);
+            if (error?.response?.status === 401) {
+                alert(error?.response?.data?.message);
+                navigate("/users/signup")
+            } else {
+                alert("something went wrong....")
+            }
         }
     }
 
@@ -40,8 +46,7 @@ const Activate = () => {
     return (
         <Layout>
             <div className='flex justify-center	items-center'>
-                <h1 className='mt-5 text-lg'>Please Wait....</h1>
-                <SyncLoader
+                <FadeLoader
                     loading={loading}
                     color='#3E6553'
                 />

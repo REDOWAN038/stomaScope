@@ -18,7 +18,7 @@ const registerUser = async (req, res, next) => {
         const existingUser = await userModel.findOne({ email })
 
         if (existingUser) {
-            throw createError(409, "user already exists by this mail")
+            throw createError(409, "user already exists by this mail. please sign in")
         }
 
         const newUser = { name, email, password }
@@ -73,7 +73,7 @@ const activateUserAccount = async (req, res, next) => {
 
         return successResponse(res, {
             statusCode: 201,
-            message: "user registered successfully"
+            message: "user activated successfully"
         })
     } catch (error) {
         if (error.name === "TokenExpiredError") {

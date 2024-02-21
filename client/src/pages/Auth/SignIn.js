@@ -38,10 +38,19 @@ const SignIn = () => {
                     setLoggedUser(apiResponse.data.payload)
                     localStorage.setItem("user", JSON.stringify(apiResponse.data.payload))
                 }
+
+                alert(res?.data?.message)
+                navigate("/")
             }
-            navigate("/")
         } catch (error) {
-            console.log(error);
+            if (error?.response?.status === 404) {
+                alert(error?.response?.data?.message);
+                navigate("/users/signup")
+            }
+
+            if (error?.response?.status === 401) {
+                alert(error?.response?.data?.message);
+            }
         }
     }
 
