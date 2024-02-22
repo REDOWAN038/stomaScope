@@ -3,23 +3,35 @@ const fileModel = require("../models/fileModel")
 const createError = require("http-errors")
 const cloudinary = require("../config/cloudinary")
 const { successResponse } = require("../handler/responseHandler")
-const { process } = require("../handler/processImage")
+const { processImage } = require("../handler/processImage")
+const { processVideo } = require("../handler/processVideo")
 
 // handle upload file
 const handleUploadFile = async (req, res, next) => {
     try {
-        const { name, userId } = req.body
-        const image = req.file?.path
-        const newFile = { name, image, uploader: userId }
+        const { name, userId, type } = req.body
+        const filePath = req.file?.path
+        const newFile = { name, filePath, type: parseInt(type), uploader: userId }
 
-        const output = await process(image)
+        if (type === "0") {
+            const output = await processImage(filePath)
 
-        if (output || image) {
-            const response = await cloudinary.uploader.upload(image, {
-                folder: "stomaScope/images"
-            })
-            newFile.image = response.secure_url
-            newFile.count = parseInt(output)
+            if (output || filePath) {
+                const response = await cloudinary.uploader.upload(filePath, {
+                    folder: "stomaScope/images"
+                })
+                newFile.filePath = response.secure_url
+                newFile.count = parseInt(output)
+            }
+        } else {
+            const output = await processVideo(filePath)
+            if (output || filePath) {
+                const response = await cloudinary.uploader.upload(filePath, {
+                    resource_type: 'video',
+                    folder: "stomaScope/videos"
+                })
+                newFile.filePath = response.secure_url
+            }
         }
 
         const file = await fileModel.create(newFile)

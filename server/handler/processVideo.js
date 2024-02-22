@@ -1,11 +1,11 @@
 const { spawn } = require("child_process");
-const { imageProcessPath, modelPath } = require("../src/secret");
+const { videoProcessPath, videoProcessOutputPath, modelPath } = require("../src/secret");
 
-const processImage = (imagePath) => {
+const processVideo = (videoPath) => {
     return new Promise((resolve, reject) => {
         let dataBuffer; // Buffer to accumulate data from stdout
 
-        const pythonProcess = spawn('python', [imageProcessPath, imagePath, modelPath]);
+        const pythonProcess = spawn('python', [videoProcessPath, videoPath, videoProcessOutputPath, modelPath]);
 
         pythonProcess.stdout.on('data', (data) => {
             dataBuffer = data; // Append data to buffer
@@ -27,4 +27,4 @@ const processImage = (imagePath) => {
     });
 }
 
-module.exports = { processImage }
+module.exports = { processVideo }

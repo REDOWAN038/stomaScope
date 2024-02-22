@@ -3,7 +3,6 @@ const createError = require('http-errors')
 const morgan = require("morgan")
 const rateLimit = require("express-rate-limit")
 const cookieParser = require("cookie-parser")
-const cors = require("cors")
 const app = express()
 
 const userRoutes = require("../routes/userRoutes")
@@ -19,15 +18,15 @@ const limiter = rateLimit({
 })
 
 // middlewares
-app.use((req, res, next) => {
-    // console.log("yooo : ", req.cookies.accessToken);
-    const origin = req.headers.origin;
-    res.setHeader('Access-Control-Allow-Origin', origin); // Allow requests from any origin
-    res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE");
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
-    next();
-});
+// app.use((req, res, next) => {
+//     // console.log("yooo : ", req.cookies.accessToken);
+//     const origin = req.headers.origin;
+//     res.setHeader('Access-Control-Allow-Origin', origin); // Allow requests from any origin
+//     res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE");
+//     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
+//     next();
+// });
 app.use(cookieParser())
 app.use(morgan("dev"))
 app.use(express.json())

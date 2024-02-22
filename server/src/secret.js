@@ -12,6 +12,8 @@ const cloudApiKey = process.env.CLOUDINARY_API_KEY
 const cloudSecretKey = process.env.CLOUDINARY_SECRET_KEY
 const modelPath = process.env.MODEL_PATH
 const imageProcessPath = process.env.IMAGE_PROCESS_PATH
+const videoProcessPath = process.env.VIDEO_PROCESS_PATH
+const videoProcessOutputPath = process.env.VIDEO_PROCESS_OUTOUT_PATH
 
 
 
@@ -27,5 +29,7 @@ module.exports = {
     cloudApiKey,
     cloudSecretKey,
     modelPath,
-    imageProcessPath
+    imageProcessPath,
+    videoProcessPath,
+    videoProcessOutputPath
 }

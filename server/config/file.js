@@ -1,9 +1,9 @@
-const uploadImagePath = "public/images"
-const uploadImageMaxSize = 2097152
-const allowedImageTypes = ['image/jpg','image/jpeg','image/png']
+const uploadFilePath = "public/images"
+const uploadFileMaxSize = 20 * 1024 * 1024
+const allowedFileTypes = ['image/jpg', 'image/jpeg', 'image/png', 'video/mp4', 'video/mov']
 
 module.exports = {
-    uploadImagePath,
-    uploadImageMaxSize,
-    allowedImageTypes
+    uploadFilePath,
+    uploadFileMaxSize,
+    allowedFileTypes
 }
