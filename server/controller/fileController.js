@@ -24,8 +24,8 @@ const handleUploadFile = async (req, res, next) => {
                 newFile.count = parseInt(output)
             }
         } else {
-            const output = await processVideo(filePath)
-            if (output || filePath) {
+            await processVideo(filePath)
+            if (filePath) {
                 const response = await cloudinary.uploader.upload(filePath, {
                     resource_type: 'video',
                     folder: "stomaScope/videos"
@@ -48,9 +48,8 @@ const handleUploadFile = async (req, res, next) => {
 // delete file
 const handleDeleteFile = async (req, res, next) => {
     try {
-        const { userId } = req.body
+        const { userId, type } = req.body
         const { id } = req.params
-        console.log(id);
         const existingFile = await fileModel.findById(id)
 
         if (!existingFile) {
@@ -61,9 +60,23 @@ const handleDeleteFile = async (req, res, next) => {
             throw createError(401, "unauthorize")
         }
 
-        const publicId = await getPublicId(existingFile.image)
+        const publicId = await getPublicId(existingFile.filePath)
+        let folder = ""
+        let resourceType = ""
 
-        const { result } = await cloudinary.uploader.destroy(`stomaScope/images/${publicId}`)
+        if (type === "0") {
+            folder = "images"
+            resourceType = "image"
+        } else {
+            folder = "videos"
+            resourceType = "video"
+        }
+
+        // const result = await cloudinary.api.delete_resources([`stomascope/${folder}/${publicId}`], { type: 'upload', resource_type: `${resourceType}` })
+
+        const { result } = await cloudinary.uploader.destroy(`stomaScope/${folder}/${publicId}`, {
+            resource_type: resourceType
+        })
 
         if (result !== "ok") {
             throw createError(400, "please try again")

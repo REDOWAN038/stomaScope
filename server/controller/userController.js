@@ -109,13 +109,13 @@ const getUserUploadHistory = async (req, res, next) => {
         const page = Number(req.query.page) || 1
         const limit = 6
 
-        const { userId } = req.body
+        const { userId, type } = req.body
         const history = await fileModel
-            .find({ uploader: userId })
+            .find({ uploader: userId, type })
             .sort({ createdAt: -1 })
             .limit(limit)
             .skip((page - 1) * limit)
-        const total = await fileModel.find({ uploader: userId }).countDocuments()
+        const total = await fileModel.find({ uploader: userId, type }).countDocuments()
 
         return successResponse(res, {
             statusCode: 200,
