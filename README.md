@@ -97,6 +97,10 @@ To run this project, you will need to add the following environment variables to
 
 `IMAGE_PROCESS_PATH`
 
+`VIDEO_PROCESS_PATH`
+
+`VIDEO_PROCESS_OUTOUT_PATH`
+
 
 
 ## Run Locally

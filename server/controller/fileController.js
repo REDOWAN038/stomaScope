@@ -13,25 +13,27 @@ const handleUploadFile = async (req, res, next) => {
         const filePath = req.file?.path
         const newFile = { name, filePath, type: parseInt(type), uploader: userId }
 
+        let folder = ""
+        let resourceType = ""
+
         if (type === "0") {
             const output = await processImage(filePath)
+            newFile.count = parseInt(output)
+            folder = "images"
+            resourceType = "image"
 
-            if (output || filePath) {
-                const response = await cloudinary.uploader.upload(filePath, {
-                    folder: "stomaScope/images"
-                })
-                newFile.filePath = response.secure_url
-                newFile.count = parseInt(output)
-            }
         } else {
             await processVideo(filePath)
-            if (filePath) {
-                const response = await cloudinary.uploader.upload(filePath, {
-                    resource_type: 'video',
-                    folder: "stomaScope/videos"
-                })
-                newFile.filePath = response.secure_url
-            }
+            folder = "videos"
+            resourceType = "video"
+        }
+
+        if (filePath) {
+            const response = await cloudinary.uploader.upload(filePath, {
+                resource_type: `${resourceType}`,
+                folder: `stomaScope/${folder}`
+            })
+            newFile.filePath = response.secure_url
         }
 
         const file = await fileModel.create(newFile)
@@ -71,8 +73,6 @@ const handleDeleteFile = async (req, res, next) => {
             folder = "videos"
             resourceType = "video"
         }
-
-        // const result = await cloudinary.api.delete_resources([`stomascope/${folder}/${publicId}`], { type: 'upload', resource_type: `${resourceType}` })
 
         const { result } = await cloudinary.uploader.destroy(`stomaScope/${folder}/${publicId}`, {
             resource_type: resourceType

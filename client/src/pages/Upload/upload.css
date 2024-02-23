@@ -12,7 +12,7 @@
     font-style: bold;
 }
 
-.image{
+.file{
     margin-top: 10px;
     max-width: 100%;
     max-height: 100%;
@@ -58,6 +58,6 @@
   cursor: pointer;
 }
 
-.image:hover{
+.file:hover{
     cursor: pointer;
 }

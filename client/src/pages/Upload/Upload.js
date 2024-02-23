@@ -12,14 +12,16 @@ import FullImage from '../../components/Utils/FullImage';
 const Upload = () => {
     const [file, setFile] = useState("")
     const [image, setImage] = useState("")
+    const [video, setVideo] = useState("")
     const [name, setName] = useState("")
     const [count, setCount] = useState(0)
     const [loading, setLoading] = useState(false)
     const [fullImage, setFullImage] = useState("")
+    const [format, setFormat] = useState("")
 
     const handleDownload = () => {
-        saveAs(image, name)
-        message.success(`${name} downloaded`)
+        saveAs(video, name)
+        // message.success(`${name} downloaded`)
     }
 
     const showFullImage = () => {
@@ -30,15 +32,26 @@ const Upload = () => {
         setFullImage("");
     };
 
+    const handleOptimizeVideo = (url) => {
+        const optimizedUrl = url.replace("/upload", "/upload/f_auto:video,q_auto")
+        setVideo(optimizedUrl)
+        console.log(optimizedUrl);
+    }
+
     const uploadImage = async (e) => {
         try {
             setLoading(true)
             setImage("")
+            setVideo("")
             setCount(0)
+
+            file.type.split("/")[0] === "image" ? setFormat("0") : setFormat("1")
+            console.log(format);
             const name = file.name.split(".")[0]
             const formData = new FormData()
             formData.append("name", name)
-            formData.append("image", file)
+            formData.append("type", format)
+            formData.append("filePath", file)
 
             const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/upload`,
                 formData, { withCredentials: true }
@@ -47,9 +60,14 @@ const Upload = () => {
             if (res?.data?.success) {
                 setLoading(false)
                 message.success("stomata detection completed")
-                setImage(res?.data?.payload?.file?.image)
-                setCount(res?.data?.payload?.file?.count)
                 setName(res?.data?.payload?.file?.name)
+                if (format === "0") {
+                    setImage(res?.data?.payload?.file?.filePath)
+                    setCount(res?.data?.payload?.file?.count)
+                } else if (format === "1") {
+                    console.log(res?.data?.payload?.file?.filePath);
+                    handleOptimizeVideo(res?.data?.payload?.file?.filePath)
+                }
             }
         } catch (error) {
             setLoading(false)
@@ -64,7 +82,12 @@ const Upload = () => {
                     <li className='w-5/6'>
                         <Form>
                             <Form.Group className="mb-3">
-                                <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} />
+                                <Form.Control type="file" onChange={(e) => {
+                                    setFile("")
+                                    setFile(e.target.files[0])
+                                    console.log(file);
+                                }}
+                                />
                             </Form.Group>
                         </Form>
                     </li>
@@ -80,10 +103,19 @@ const Upload = () => {
                     image && (
                         <div className='preview'>
                             <h1 className='height'>Stomata Count : {count}</h1>
-                            <img src={image} alt="" className='image' onClick={() => showFullImage()} />
-                            {/* <div className='flex justify-center	items-center mt-3'> */}
+                            <img src={image} alt="" className='file' onClick={() => showFullImage()} />
                             <button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-4" onClick={() => handleDownload()}>Download</button>
-                            {/* </div> */}
+                        </div>
+                    )
+                }
+
+                {
+                    video && (
+                        <div className="preview">
+                            <video className='file' controls>
+                                <source src={video} />
+                            </video>
+                            <button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-4" onClick={() => handleDownload()}>Download</button>
                         </div>
                     )
                 }
