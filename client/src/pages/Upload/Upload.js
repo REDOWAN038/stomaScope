@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from "../../components/Layout/Layout"
 import Form from 'react-bootstrap/Form';
 import axios from "axios"
@@ -17,7 +17,7 @@ const Upload = () => {
     const [count, setCount] = useState(0)
     const [loading, setLoading] = useState(false)
     const [fullImage, setFullImage] = useState("")
-    const [format, setFormat] = useState("")
+    const [type, setType] = useState("")
 
     const handleDownload = () => {
         saveAs(video, name)
@@ -38,19 +38,19 @@ const Upload = () => {
         console.log(optimizedUrl);
     }
 
-    const uploadImage = async (e) => {
+
+    const uploadFile = async (e) => {
+        e.preventDefault()
         try {
             setLoading(true)
             setImage("")
             setVideo("")
             setCount(0)
 
-            file.type.split("/")[0] === "image" ? setFormat("0") : setFormat("1")
-            console.log(format);
             const name = file.name.split(".")[0]
             const formData = new FormData()
             formData.append("name", name)
-            formData.append("type", format)
+            formData.append("type", type)
             formData.append("filePath", file)
 
             const res = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/upload`,
@@ -61,10 +61,10 @@ const Upload = () => {
                 setLoading(false)
                 message.success("stomata detection completed")
                 setName(res?.data?.payload?.file?.name)
-                if (format === "0") {
+                if (type === "0") {
                     setImage(res?.data?.payload?.file?.filePath)
                     setCount(res?.data?.payload?.file?.count)
-                } else if (format === "1") {
+                } else if (type === "1") {
                     console.log(res?.data?.payload?.file?.filePath);
                     handleOptimizeVideo(res?.data?.payload?.file?.filePath)
                 }
@@ -75,6 +75,12 @@ const Upload = () => {
         }
     }
 
+    useEffect(() => {
+        if (file) {
+            file.type.split("/")[0] === "image" ? setType("0") : setType("1")
+        }
+    }, [file])
+
     return (
         <Layout>
             <div className="container mt-3">
@@ -82,16 +88,12 @@ const Upload = () => {
                     <li className='w-5/6'>
                         <Form>
                             <Form.Group className="mb-3">
-                                <Form.Control type="file" onChange={(e) => {
-                                    setFile("")
-                                    setFile(e.target.files[0])
-                                    console.log(file);
-                                }}
+                                <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])}
                                 />
                             </Form.Group>
                         </Form>
                     </li>
-                    <li><button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-1" onClick={() => uploadImage()}>Upload</button></li>
+                    <li><button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-1" onClick={(e) => uploadFile(e)}>Upload</button></li>
                 </ul>
                 <div className='flex justify-center	items-center'>
                     <SyncLoader
