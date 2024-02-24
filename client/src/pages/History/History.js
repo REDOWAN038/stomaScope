@@ -14,6 +14,7 @@ const History = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [total, setTotal] = useState(0)
     const [fullImage, setFullImage] = useState("")
+    const [fullVideo, setFullVideo] = useState("")
 
     const getUserHistory = async () => {
         try {
@@ -35,12 +36,22 @@ const History = () => {
         }
     }
 
-    const showFullImage = (item) => {
-        setFullImage(item.filePath)
+    const getOptimizeUrl = (url) => {
+        const optimizedUrl = url.replace("/upload", "/upload/f_auto:video,q_auto")
+        return optimizedUrl
+    }
+
+    const showFullScreen = (item) => {
+        if (type === "images") {
+            setFullImage(item.filePath)
+        } else if (type === "videos") {
+            setFullVideo(getOptimizeUrl(item.filePath))
+        }
     }
 
     const handleCloseModal = () => {
         setFullImage("");
+        setFullVideo("")
     };
 
     const handleDelete = async (item) => {
@@ -81,8 +92,9 @@ const History = () => {
                                 <Item
                                     key={index}
                                     item={item}
-                                    onImageClick={showFullImage}
+                                    onFileClick={showFullScreen}
                                     onDelete={handleDelete}
+                                    type={type}
                                 />
                             ))
                         }
@@ -91,7 +103,11 @@ const History = () => {
             </div>
 
             {
-                fullImage && <FullImage image={fullImage} onClose={handleCloseModal} />
+                fullImage && <FullImage file={fullImage} onClose={handleCloseModal} type={type} />
+            }
+
+            {
+                fullVideo && <FullImage file={fullVideo} onClose={handleCloseModal} type={type} />
             }
         </Layout>
     )
