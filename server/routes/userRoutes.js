@@ -6,7 +6,7 @@ const { isLoggedIn, isLoggedOut } = require("../middlewares/auth")
 const router = express.Router()
 
 // register an user
-router.post("/register", isLoggedOut, validateUserRegistration, runValidation,registerUser)
+router.post("/register", isLoggedOut, validateUserRegistration, runValidation, registerUser)
 
 // activate user account
 router.post("/activate", isLoggedOut, activateUserAccount)
@@ -15,6 +15,6 @@ router.post("/activate", isLoggedOut, activateUserAccount)
 router.get("/profile", isLoggedIn, getUserByID)
 
 // get user upload history
-router.get("/upload-history", isLoggedIn, getUserUploadHistory)
+router.get("/history/:type", isLoggedIn, getUserUploadHistory)
 
 module.exports = router

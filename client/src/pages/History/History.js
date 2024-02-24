@@ -5,9 +5,11 @@ import axios from "axios"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { message } from "antd"
 import FullImage from '../../components/Utils/FullImage'
+import { useParams } from 'react-router-dom'
 
 
 const History = () => {
+    const { type } = useParams()
     const [data, setData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [total, setTotal] = useState(0)
@@ -15,13 +17,12 @@ const History = () => {
 
     const getUserHistory = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/users/upload-history`, {
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/users/history/${type}`, {
                 params: {
-                    page: currentPage
+                    page: currentPage,
                 },
                 withCredentials: true
-            }
-            )
+            })
 
 
             if (res?.data?.success) {
@@ -35,7 +36,7 @@ const History = () => {
     }
 
     const showFullImage = (item) => {
-        setFullImage(item.image)
+        setFullImage(item.filePath)
     }
 
     const handleCloseModal = () => {
@@ -47,7 +48,7 @@ const History = () => {
         if (isConfirmed) {
             try {
                 const id = item._id
-                const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/delete/${id}`, { withCredentials: true })
+                const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/delete/${type}/${id}`, { withCredentials: true })
 
                 if (res?.data?.success) {
                     message.success(`${item.name} deleted`)

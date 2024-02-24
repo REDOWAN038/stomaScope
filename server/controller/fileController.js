@@ -50,8 +50,9 @@ const handleUploadFile = async (req, res, next) => {
 // delete file
 const handleDeleteFile = async (req, res, next) => {
     try {
-        const { userId, type } = req.body
-        const { id } = req.params
+        const { userId } = req.body
+        const { type, id } = req.params
+
         const existingFile = await fileModel.findById(id)
 
         if (!existingFile) {
@@ -66,7 +67,7 @@ const handleDeleteFile = async (req, res, next) => {
         let folder = ""
         let resourceType = ""
 
-        if (type === "0") {
+        if (type === "images") {
             folder = "images"
             resourceType = "image"
         } else {

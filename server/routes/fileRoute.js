@@ -9,6 +9,6 @@ const router = express.Router()
 router.post("/upload", uploadFile.single("filePath"), isLoggedIn, handleUploadFile)
 
 // delete file
-router.delete("/delete/:id", isLoggedIn, handleDeleteFile)
+router.delete("/delete/:type/:id", isLoggedIn, handleDeleteFile)
 
 module.exports = router

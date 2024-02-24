@@ -36,7 +36,7 @@ function App() {
                         <Upload />
                     </ProtectedRoute>}
                 />
-                <Route path="/users/history" element={
+                <Route path="/users/history/:type" element={
                     <ProtectedRoute accessBy="authorized">
                         <History />
                     </ProtectedRoute>}

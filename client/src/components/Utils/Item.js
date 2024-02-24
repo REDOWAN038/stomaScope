@@ -8,8 +8,8 @@ const Item = ({ item, onImageClick, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false)
 
     const handleDownload = () => {
-        saveAs(item.image, item.name)
-        message.success(`${item.name} downloaded`)
+        saveAs(item.filePath, item.name)
+        // message.success(`${item.name} downloaded`)
         setShowDropdown(false)
     }
 
@@ -30,7 +30,7 @@ const Item = ({ item, onImageClick, onDelete }) => {
         <div className='max-w-96 shadow-md rounded-xl'>
             {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <img
-                src={item.image} className='rounded-t-xl w-[350px] h-44 object-cover'
+                src={item.filePath} className='rounded-t-xl w-[350px] h-44 object-cover'
                 onClick={handleImageClick}
             />
             <div className='m-3'>
@@ -43,8 +43,8 @@ const Item = ({ item, onImageClick, onDelete }) => {
                             showDropdown && (
                                 <div className='bg-white w-28 shadow-lg absolute right-0'>
                                     <ul>
-                                        <li className='p-1 text-sm cursor-pointer rounded hover:bg-blue-100' onClick={handleDelete}>Delete</li>
-                                        <li className='p-1 text-sm cursor-pointer rounded hover:bg-blue-100' onClick={handleDownload}>Download</li>
+                                        <li className='p-1 text-sm cursor-pointer rounded hover:bg-sgreen-50' onClick={handleDelete}>Delete</li>
+                                        <li className='p-1 text-sm cursor-pointer rounded hover:bg-sgreen-50' onClick={handleDownload}>Download</li>
                                     </ul>
                                 </div>
                             )

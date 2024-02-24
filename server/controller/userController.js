@@ -109,7 +109,10 @@ const getUserUploadHistory = async (req, res, next) => {
         const page = Number(req.query.page) || 1
         const limit = 6
 
-        const { userId, type } = req.body
+        const { userId } = req.body
+        let { type } = req.params
+        type = (type === "images" ? "0" : "1")
+
         const history = await fileModel
             .find({ uploader: userId, type })
             .sort({ createdAt: -1 })
