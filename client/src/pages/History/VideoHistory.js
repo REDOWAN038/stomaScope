@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import Layout from "../../components/Layout/Layout"
-import Item from '../../components/Utils/Item'
 import axios from "axios"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { message } from "antd"
-import FullImage from '../../components/Utils/FullImage'
-import { useParams } from 'react-router-dom'
+import VideoItem from '../../components/Utils/VideoItem'
+import FullVideo from '../../components/Utils/FullVideo'
 
 
-const History = () => {
-    const { type } = useParams()
+const VideoHistory = () => {
     const [data, setData] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [total, setTotal] = useState(0)
-    const [fullImage, setFullImage] = useState("")
     const [fullVideo, setFullVideo] = useState("")
 
     const getUserHistory = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/users/history/${type}`, {
+            const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/v1/users/history/videos`, {
                 params: {
                     page: currentPage,
                 },
@@ -41,17 +38,12 @@ const History = () => {
         return optimizedUrl
     }
 
-    const showFullScreen = (item) => {
-        if (type === "images") {
-            setFullImage(item.filePath)
-        } else if (type === "videos") {
-            setFullVideo(getOptimizeUrl(item.filePath))
-        }
+    const showFullVideo = (item) => {
+        setFullVideo(getOptimizeUrl(item.filePath))
     }
 
     const handleCloseModal = () => {
-        setFullImage("");
-        setFullVideo("")
+        setFullVideo("");
     };
 
     const handleDelete = async (item) => {
@@ -59,7 +51,7 @@ const History = () => {
         if (isConfirmed) {
             try {
                 const id = item._id
-                const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/delete/${type}/${id}`, { withCredentials: true })
+                const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/delete/videos/${id}`, { withCredentials: true })
 
                 if (res?.data?.success) {
                     message.success(`${item.name} deleted`)
@@ -89,12 +81,11 @@ const History = () => {
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-large'>
                         {
                             data.map((item, index) => (
-                                <Item
+                                <VideoItem
                                     key={index}
                                     item={item}
-                                    onFileClick={showFullScreen}
+                                    onFileClick={showFullVideo}
                                     onDelete={handleDelete}
-                                    type={type}
                                 />
                             ))
                         }
@@ -103,14 +94,10 @@ const History = () => {
             </div>
 
             {
-                fullImage && <FullImage file={fullImage} onClose={handleCloseModal} type={type} />
-            }
-
-            {
-                fullVideo && <FullImage file={fullVideo} onClose={handleCloseModal} type={type} />
+                fullVideo && <FullVideo video={fullVideo} onClose={handleCloseModal} />
             }
         </Layout>
     )
 }
 
-export default History
+export default VideoHistory

@@ -2,13 +2,14 @@ import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home/Home"
 import Upload from "./pages/Upload/Upload"
 import FAQs from "./pages/FAQs/FAQs"
-import History from "./pages/History/History"
 import PageNotFound from "./pages/PageNotFound/PageNotFound"
 import SignIn from "./pages/Auth/SignIn"
 import SignUp from "./pages/Auth/SignUp"
 import { AuthContextProvider } from "./context/authContext"
 import ProtectedRoute from "./components/Protection/ProtectedRoute"
 import Activate from "./pages/Auth/Activate"
+import ImageHistory from "./pages/History/ImageHistory"
+import VideoHistory from "./pages/History/VideoHistory"
 
 function App() {
     return (
@@ -36,9 +37,14 @@ function App() {
                         <Upload />
                     </ProtectedRoute>}
                 />
-                <Route path="/users/history/:type" element={
+                <Route path="/users/history/images" element={
                     <ProtectedRoute accessBy="authorized">
-                        <History />
+                        <ImageHistory />
+                    </ProtectedRoute>}
+                />
+                <Route path="/users/history/videos" element={
+                    <ProtectedRoute accessBy="authorized">
+                        <VideoHistory />
                     </ProtectedRoute>}
                 />
                 <Route path="*" element={<PageNotFound />} />

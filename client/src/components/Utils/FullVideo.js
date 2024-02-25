@@ -1,17 +1,18 @@
 import React from 'react'
 import "./fullFile.css"
 
-const FullImage = ({ image, onClose }) => {
+const FullVideo = ({ video, onClose }) => {
     const handleCloseModal = () => {
         onClose()
     }
     return (
         <div className="modal" >
             <span className="close" onClick={handleCloseModal}>&times;</span>
-            {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-            <img className="modal-content" src={image} alt="Full Image" />
+            <video className="modal-content" controls>
+                <source src={video} />
+            </video>
         </div>
     )
 }
 
-export default FullImage
+export default FullVideo
