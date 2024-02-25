@@ -30,8 +30,6 @@ const Header = () => {
 
                         <li><NavLink to="/users/upload" className={`header-navlink hover:decoration-sgreen-100 hover:decoration-2  hover:text-sgreen-100 ${isActive('/users/upload')}`}>Upload</NavLink></li>
 
-                        {/* <li><NavLink to="/users/history" className={`header-navlink hover:decoration-sgreen-100 hover:decoration-2  hover:text-sgreen-100 ${isActive('/users/history')}`}>History</NavLink></li> */}
-
                         <li className="relative">
                             <div
                                 className={`header-navlink cursor-pointer hover:decoration-sgreen-100 hover:decoration-2 hover:text-sgreen-100 ${isActive('/users/history')}`}

@@ -1,15 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
 .signup_login {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  /* height: 80vh; */
   gap: 6rem;
   margin-top: 2rem;
 }
@@ -110,7 +104,7 @@ h2 {
   font-size: 14px;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 640px) {
   .signup_login {
     flex-direction: column;
     gap: 3rem;
@@ -119,7 +113,7 @@ h2 {
     width: 300px;
   }
   .signup {
-    padding-top: 200px;
+    /* padding-top: 200px; */
     text-align: center;
   }
 }

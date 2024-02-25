@@ -84,7 +84,7 @@ const Upload = () => {
     return (
         <Layout>
             <div className="container mt-3">
-                <ul className='md:flex gap-3 hidden'>
+                <ul className='flex gap-3'>
                     <li className='w-5/6'>
                         <Form>
                             <Form.Group className="mb-3">
