@@ -104,13 +104,13 @@ h2 {
   font-size: 14px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .signup_login {
     flex-direction: column;
     gap: 3rem;
   }
   .signup img {
-    width: 300px;
+    display: none;
   }
   .signup {
     /* padding-top: 200px; */
