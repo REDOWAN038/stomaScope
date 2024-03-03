@@ -46,23 +46,6 @@ const ImageHistory = () => {
         setFullImage("");
     };
 
-    const handleDelete = async (item) => {
-        const isConfirmed = window.confirm('Are you sure you want to delete this image?')
-        if (isConfirmed) {
-            try {
-                const id = item._id
-                const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/delete/images/${id}`, { withCredentials: true })
-
-                if (res?.data?.success) {
-                    message.success(`${item.name} deleted`)
-                    window.location.reload()
-                }
-            } catch (error) {
-                message.error("something went wrong. try again...")
-            }
-        }
-    }
-
     useEffect(() => {
         getUserHistory()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,7 +68,6 @@ const ImageHistory = () => {
                                     key={index}
                                     item={item}
                                     onFileClick={showFullImage}
-                                    onDelete={handleDelete}
                                 />
                             ))
                         }

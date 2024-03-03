@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { MoreVert } from '@material-ui/icons';
 import { saveAs } from "file-saver"
+import axios from 'axios';
+import { message } from "antd"
 
 
-const VideoItem = ({ item, onFileClick, onDelete }) => {
+const VideoItem = ({ item, onFileClick }) => {
     const [showDropdown, setShowDropdown] = useState(false)
 
     const getOptimizeUrl = (url) => {
@@ -22,8 +24,20 @@ const VideoItem = ({ item, onFileClick, onDelete }) => {
     }
 
     const handleDelete = async () => {
-        setShowDropdown(false)
-        onDelete(item)
+        const isConfirmed = window.confirm('Are you sure you want to delete this video?')
+        if (isConfirmed) {
+            try {
+                const id = item._id
+                const res = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/v1/file/delete/videos/${id}`, { withCredentials: true })
+
+                if (res?.data?.success) {
+                    message.success(`${item.name} deleted`)
+                    window.location.reload()
+                }
+            } catch (error) {
+                message.error("something went wrong. try again...")
+            }
+        }
     }
 
     const handleDotsClick = () => {
