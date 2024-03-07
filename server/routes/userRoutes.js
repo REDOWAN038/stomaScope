@@ -1,6 +1,6 @@
 const express = require("express")
-const { registerUser, activateUserAccount, getUserByID, getUserUploadHistory } = require("../controller/userController")
-const { validateUserRegistration, validateFileUpload } = require("../middlewares/validation")
+const { registerUser, activateUserAccount, getUserByID, getUserUploadHistory, resetPassword, resetPasswordConfirmation } = require("../controller/userController")
+const { validateUserRegistration, validateFileUpload, validateUserResetPassword } = require("../middlewares/validation")
 const { runValidation } = require("../middlewares")
 const { isLoggedIn, isLoggedOut } = require("../middlewares/auth")
 const router = express.Router()
@@ -10,6 +10,12 @@ router.post("/register", isLoggedOut, validateUserRegistration, runValidation, r
 
 // activate user account
 router.post("/activate", isLoggedOut, activateUserAccount)
+
+//reset password
+router.put("/reset-password", isLoggedOut, validateUserResetPassword, runValidation, resetPassword)
+
+// reset password confirmation
+router.put("/reset-password-confirmation", isLoggedOut, resetPasswordConfirmation)
 
 // get user profile
 router.get("/profile", isLoggedIn, getUserByID)

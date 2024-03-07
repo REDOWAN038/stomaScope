@@ -32,7 +32,28 @@ const validateFileUpload = [
 
 ]
 
+const validateUserResetPassword = [
+    body("email")
+        .trim()
+        .notEmpty()
+        .withMessage("Email is required")
+        .isEmail()
+        .withMessage("Emails is not valid"),
+
+    body("newPassword")
+        .trim()
+        .notEmpty()
+        .withMessage("New Pasword is required"),
+
+    body("confirmPassword")
+        .trim()
+        .notEmpty()
+        .withMessage("Confirm Pasword is required"),
+
+]
+
 module.exports = {
     validateUserRegistration,
-    validateFileUpload
+    validateFileUpload,
+    validateUserResetPassword
 }
