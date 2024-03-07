@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/Protection/ProtectedRoute"
 import Activate from "./pages/Auth/Activate"
 import ImageHistory from "./pages/History/ImageHistory"
 import VideoHistory from "./pages/History/VideoHistory"
+import ResetPassword from "./pages/Auth/ResetPassword"
+import ResetPasswordConfirmation from "./pages/Auth/ResetPasswordConfirmation"
 
 function App() {
     return (
@@ -30,6 +32,16 @@ function App() {
                 <Route path="/users/activate/:token" element={
                     <ProtectedRoute accessBy="unauthorized">
                         <Activate />
+                    </ProtectedRoute>}
+                />
+                <Route path="/users/reset-password" element={
+                    <ProtectedRoute accessBy="unauthorized">
+                        <ResetPassword />
+                    </ProtectedRoute>}
+                />
+                <Route path="/users/reset-password-confirmation/:token" element={
+                    <ProtectedRoute accessBy="unauthorized">
+                        <ResetPasswordConfirmation />
                     </ProtectedRoute>}
                 />
                 <Route path="/users/upload" element={

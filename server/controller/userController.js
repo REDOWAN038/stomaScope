@@ -107,7 +107,7 @@ const resetPassword = async (req, res, next) => {
             email,
             subject: "Reset Password",
             html: `
-            <p> please click here to <a href="${clientURL}/users/reset-password-confirmation/${token}" target="_blank"> to reset your account password </a> </p>
+            <p> please click here to <a href="${clientURL}/users/reset-password-confirmation/${token}" target="_blank"> reset your account password </a> </p>
             `
         }
 
@@ -123,9 +123,6 @@ const resetPassword = async (req, res, next) => {
         return successResponse(res, {
             statusCode: 200,
             message: "please check your email",
-            payload: {
-                token
-            }
         })
     } catch (error) {
         next(error)

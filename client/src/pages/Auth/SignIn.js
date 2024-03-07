@@ -87,6 +87,12 @@ const SignIn = () => {
 
                     <div className="signUp-link">
                         <p>
+                            <NavLink to="/users/reset-password" className="signUpBtn-link">Forget Your Password?</NavLink>
+                        </p>
+                    </div>
+
+                    <div className="signUp-link">
+                        <p>
                             Don't have an account?
                             <NavLink to="/users/signup" className="signUpBtn-link">Sign Up</NavLink>
                         </p>
