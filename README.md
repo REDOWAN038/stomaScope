@@ -61,6 +61,19 @@ Detecting stomata from a video/image
   delete /api/v1/file/delete
 ```
 
+
+#### reset user password
+
+```http
+  put /api/v1/users/reset-password
+```
+
+#### reset user password confirmation
+
+```http
+  put /api/v1/users/reset-password-confirmation
+```
+
 ## Environment Variables
 
 
@@ -80,6 +93,8 @@ To run this project, you will need to add the following environment variables to
 `JWT_ACTIVATION_KEY`
 
 `JWT_ACCESS_KEY`
+
+`JWT_RESET_KEY`
 
 `SMTP_USER`
 
