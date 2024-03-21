@@ -7,9 +7,11 @@
         {
             "src":"/(.*)",
             "dest":"/",
-            "methods": ["POST", "GET", "PUT", "DELETE"],
+            "methods": ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
             "headers": {
                 "Access-Control-Allow-Origin": "https://stoma-scope.vercel.app",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+                "Access-Control-Allow-Methods": "POST, GET, PUT, DELETE, OPTIONS",
                 "Access-Control-Allow-Credentials": "true"
             },
             "continue": true
