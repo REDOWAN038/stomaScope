@@ -54,7 +54,7 @@ const ImageHistory = () => {
     return (
         <Layout>
             <div className='flex flex-col justify-center items-center'>
-                <h1 className='font-semibold text-2xl tracking-wide my-6'>Your Upload History</h1>
+                <h1 className='font-semibold text-2xl tracking-wide my-6 mb-16'>Your Upload History</h1>
                 <InfiniteScroll
                     dataLength={data.length}
                     next={getUserHistory}

@@ -56,8 +56,8 @@ const ImageItem = ({ item, onFileClick }) => {
                             showDropdown && (
                                 <div className='bg-white w-28 shadow-lg absolute right-0'>
                                     <ul>
-                                        <li className='p-1 text-sm cursor-pointer rounded hover:bg-sgreen-50' onClick={handleDelete}>Delete</li>
-                                        <li className='p-1 text-sm cursor-pointer rounded hover:bg-sgreen-50' onClick={handleDownload}>Download</li>
+                                        <li className='p-1 text-base cursor-pointer rounded hover:bg-sgreen-50 text-center' onClick={handleDelete}>Delete</li>
+                                        <li className='p-1 text-base cursor-pointer rounded hover:bg-sgreen-50 text-center' onClick={handleDownload}>Download</li>
                                     </ul>
                                 </div>
                             )

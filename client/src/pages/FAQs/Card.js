@@ -15,7 +15,7 @@ const Card = ({ id, question: q, answer: a, panel: p, handleChange, expanded }) 
             <AccordionDetails
                 style={{ backgroundColor: '#E6EFEB', color: 'black' }}
             >
-                <p className="text-[0.9rem]">{a}</p>
+                <p className="text-[1rem]">{a}</p>
             </AccordionDetails>
         </Accordion>
     )

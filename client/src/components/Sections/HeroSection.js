@@ -1,8 +1,11 @@
 import React from "react";
 import Poster from '../../img/img3c.png'
 import "../../css/tailwind.css"
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+    const navigate = useNavigate()
+
     return (
         <section className="flex flex-col md:flex-row-reverse justify-center md:justify-between items-center my-5 lg:w-large lg:mx-auto md:mt-20 lg:mt-32" id="home">
             {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -15,7 +18,8 @@ const HeroSection = () => {
                     Our advanced algorithm accurately detects stomata from
                     microscopic images and videos of leaves. With our cutting edge
                     technology, you can easily analyze stomata.</p>
-                <button className="bg-sgreen-100 text-white py-4 px-6 rounded-xl">Explore <i class="fa-solid fa-arrow-right"></i></button>
+                <button className="bg-sgreen-100 text-white py-4 px-6 rounded-xl"
+                    onClick={() => navigate("/users/upload")}>Explore <i class="fa-solid fa-arrow-right"></i></button>
             </div>
         </section>
     )

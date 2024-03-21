@@ -16,6 +16,7 @@ const ResetPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            message.loading("Please Wait...")
             const email = emailRef.current.value
             const newPassword = newPasswordRef.current.value
             const confirmPassword = confirmPasswordRef.current.value

@@ -3,6 +3,7 @@ const createError = require('http-errors')
 const morgan = require("morgan")
 const rateLimit = require("express-rate-limit")
 const cookieParser = require("cookie-parser")
+const cors = require("cors")
 const app = express()
 
 const userRoutes = require("../routes/userRoutes")
@@ -10,22 +11,21 @@ const seedRoutes = require("../routes/seedRoutes")
 const authRoutes = require("../routes/authRoutes")
 const fileRoutes = require("../routes/fileRoute")
 const { errorResponse } = require("../handler/responseHandler")
+const { clientURL } = require("./secret")
 
-const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    max: 5,
-    message: "too many requests"
-})
+// const limiter = rateLimit({
+//     windowMs: 1 * 60 * 1000,
+//     max: 5,
+//     message: "too many requests"
+// })
 
 // middlewares
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    res.setHeader('Access-Control-Allow-Origin', origin); // Allow requests from any origin
-    res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE");
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
-    next();
-});
+
+app.use(cors({
+    origin: clientURL,
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true
+}))
 app.use(cookieParser())
 app.use(morgan("dev"))
 app.use(express.json())

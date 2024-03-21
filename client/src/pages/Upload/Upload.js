@@ -93,7 +93,7 @@ const Upload = () => {
                             </Form.Group>
                         </Form>
                     </li>
-                    <li><button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-1" onClick={(e) => uploadFile(e)}>Upload</button></li>
+                    <li><button className="bg-sgreen-100 border-2 border-sgreen-100 text-sm text-white px-3 py-1 rounded-full mt-1" onClick={(e) => uploadFile(e)}>Upload</button></li>
                 </ul>
                 <div className='flex justify-center	items-center'>
                     <SyncLoader
@@ -106,7 +106,7 @@ const Upload = () => {
                         <div className='preview'>
                             <h1 className='height'>Stomata Count : {count}</h1>
                             <img src={image} alt="" className='file' onClick={() => showFullImage()} />
-                            <button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-4" onClick={() => handleDownload()}>Download</button>
+                            <button className="bg-sgreen-100 border-2 border-sgreen-100 text-sm text-white px-3 py-1 rounded-full mt-4" onClick={() => handleDownload()}>Download</button>
                         </div>
                     )
                 }
@@ -117,7 +117,7 @@ const Upload = () => {
                             <video className='file' controls>
                                 <source src={video} />
                             </video>
-                            <button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full mt-4" onClick={() => handleDownload()}>Download</button>
+                            <button className="bg-sgreen-100 border-2 border-sgreen-100 text-sm text-white px-3 py-1 rounded-full mt-4" onClick={() => handleDownload()}>Download</button>
                         </div>
                     )
                 }

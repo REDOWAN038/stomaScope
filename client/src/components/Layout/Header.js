@@ -50,9 +50,9 @@ const Header = () => {
 
     return (
         <header className="bg-white w-screen h-14 flex justify-center items-center shadow-md fixed top-0 z-10" id="header">
-            <nav className="w-full flex justify-between items-center px-9 lg:w-large text-xs ">
+            <nav className="w-full flex justify-between items-center px-9 lg:w-large text-base ">
                 <NavLink to="/" className="nav__logo header-navlink">
-                    <i class="fa-solid fa-leaf text-sgreen-100"></i><span className='ml-2 uppercase font-extrabold text-sm'> stomascope</span>
+                    <i class="fa-solid fa-leaf text-sgreen-100 text-base"></i><span className='ml-2 uppercase font-extrabold text-sm'> stomascope</span>
                 </NavLink>
                 <div className='flex gap-10'>
                     <ul className='md:flex gap-10 hidden' id={navId}>
@@ -69,8 +69,8 @@ const Header = () => {
                                 History
                                 {isDropdownOpen && (
                                     <div className="absolute text-xs top-full -left-3 bg-white rounded-md p-2">
-                                        <NavLink to="/users/history/images" className="block text-black p-1 hover:text-sgreen-100 hover:bg-sgreen-50">Images</NavLink>
-                                        <NavLink to="/users/history/videos" className="block text-black p-1 hover:text-sgreen-100 hover:bg-sgreen-50">Videos</NavLink>
+                                        <NavLink to="/users/history/images" className="block text-black text-base p-1 hover:text-sgreen-100 hover:bg-sgreen-50">Images</NavLink>
+                                        <NavLink to="/users/history/videos" className="block text-black text-base p-1 hover:text-sgreen-100 hover:bg-sgreen-50">Videos</NavLink>
                                     </div>
                                 )}
                             </div>

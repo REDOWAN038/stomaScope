@@ -16,6 +16,7 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            message.loading("Please Wait...")
             const name = nameRef.current.value
             const email = emailRef.current.value
             const password = passwordRef.current.value
@@ -71,10 +72,6 @@ const SignUp = () => {
                     <div className="input-group">
                         <input type="password" ref={passwordRef} required />
                         <label for="">Password</label>
-                    </div>
-                    <div className="remember">
-                        <label
-                        ><input type="checkbox" required /> I agree to the terms & conditions</label>
                     </div>
                     <button type="submit" className="button">Sign Up</button>
                     <div className="signUp-link">

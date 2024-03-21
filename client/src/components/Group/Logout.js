@@ -29,7 +29,7 @@ const Logout = () => {
 
     return (
         <ul className='md:flex gap-3 hidden'>
-            <li><button className="bg-sgreen-100 border-2 border-sgreen-100 text-xs text-white px-3 py-1 rounded-full" onClick={() => handleLogout()}>Log Out</button></li>
+            <li><button className="bg-sgreen-100 border-2 border-sgreen-100 text-sm text-white px-3 py-1 rounded-full" onClick={() => handleLogout()}>Log Out</button></li>
         </ul>
     )
 }

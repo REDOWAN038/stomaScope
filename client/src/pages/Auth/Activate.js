@@ -34,6 +34,7 @@ const Activate = () => {
                 message.error(error?.response?.data?.message);
                 navigate("/users/signup")
             } else {
+                console.log(error);
                 message.error("something went wrong....")
             }
         }

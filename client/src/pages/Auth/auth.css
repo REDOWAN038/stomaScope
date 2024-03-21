@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
 .signup_login {
   display: flex;
   justify-content: center;
   align-items: center;
   /* height: 80vh; */
   gap: 6rem;
-  margin-top: 2rem;
+  margin-top: 4rem;
 }
 
 @keyframes animate {
@@ -86,7 +87,7 @@ h2 {
   border: 2px solid black;
 }
 .signUp-link {
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
   margin: 15px 0;
 }
