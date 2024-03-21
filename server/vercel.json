@@ -1,12 +1,12 @@
 {
     "version":2,
     "builds":[
-        {"src":"*.js","use":"@vercel/node"}
+        {"src":"./src/server.js","use":"@vercel/node"}
     ],
     "routes":[
         {
             "src":"/(.*)",
-            "dest":"/src",
+            "dest":"./src/server.js",
             "methods": ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
             "headers": {
                 "Access-Control-Allow-Origin": "https://stoma-scope.vercel.app",
