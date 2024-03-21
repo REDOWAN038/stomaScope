@@ -38,9 +38,15 @@ app.use("/api/v1/seed", seedRoutes)
 app.use("/api/v1/auth", authRoutes)
 app.use("/api/v1/file", fileRoutes)
 
-app.get("/api/v1/test", (req, res) => {
+app.get("/", (req, res) => {
     res.status(200).json({
         message: "welcome to the server"
+    })
+})
+
+app.get("/api/v1/test", (req, res) => {
+    res.status(200).json({
+        message: "testing"
     })
 })
 
