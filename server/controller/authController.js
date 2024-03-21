@@ -29,7 +29,7 @@ const handleLogin = async (req, res, next) => {
             maxAge: 24 * 24 * 60 * 60 * 1000,  // expires in 24 days
             httpOnly: true,
             // secure: true,
-            // sameSite: "none"
+            sameSite: "none"
         })
 
         return successResponse(res, {
