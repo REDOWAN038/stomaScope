@@ -6,7 +6,7 @@
     "routes":[
         {
             "src":"/(.*)",
-            "dest":"/",
+            "dest":"/src",
             "methods": ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
             "headers": {
                 "Access-Control-Allow-Origin": "https://stoma-scope.vercel.app",
