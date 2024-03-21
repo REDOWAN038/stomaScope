@@ -20,16 +20,24 @@ const { clientURL } = require("./secret")
 // })
 
 // middlewares
-
-app.use(cors({
-    origin: clientURL,
-    methods: ["POST", "GET", "PUT", "DELETE"],
-    credentials: true
-}))
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    res.setHeader('Access-Control-Allow-Origin', origin); // Allow requests from any origin
+    res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE");
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
+    next();
+});
 app.use(cookieParser())
 app.use(morgan("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// app.use(cors({
+//     origin: clientURL,
+//     methods: ["POST", "GET", "PUT", "DELETE"],
+//     credentials: true
+// }))
 // app.use(limiter)
 
 // routes
