@@ -28,8 +28,8 @@ const handleLogin = async (req, res, next) => {
         res.cookie("accessToken", accessToken, {
             maxAge: 24 * 24 * 60 * 60 * 1000,  // expires in 24 days
             httpOnly: true,
-            // secure: true,
-            // sameSite: "none"
+            secure: true,
+            sameSite: "none"
         })
 
         return successResponse(res, {
