@@ -1,5 +1,7 @@
 const { spawn } = require("child_process");
-const { imageProcessPath, modelPath } = require("../src/secret");
+// const { imageProcessPath, modelPath } = require("../src/secret");
+const imageProcessPath = require("../scripts/processImage.py")
+const modelPath = require("../scripts/best.py")
 
 const processImage = (imagePath) => {
     return new Promise((resolve, reject) => {
