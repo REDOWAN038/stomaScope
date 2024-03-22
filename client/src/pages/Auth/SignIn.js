@@ -30,15 +30,8 @@ const SignIn = () => {
             )
 
             if (res?.data?.success) {
-                const apiResponse = await axios.get(
-                    `${process.env.REACT_APP_SERVER_URL}/api/v1/users/profile`,
-                    { withCredentials: true }
-                )
-
-                if (apiResponse?.data?.success) {
-                    setLoggedUser(apiResponse.data.payload)
-                    localStorage.setItem("user", JSON.stringify(apiResponse.data.payload))
-                }
+                setLoggedUser(res?.data?.payload)
+                localStorage.setItem("user", JSON.stringify(res?.data?.payload))
 
                 message.success(res?.data?.message)
                 navigate("/")
