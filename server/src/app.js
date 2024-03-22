@@ -35,6 +35,7 @@ const { clientURL } = require("./secret")
 // }))
 app.use(cors({
     origin: 'https://stoma-scope.vercel.app',
+    methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true
 }));
 app.use(cookieParser())
