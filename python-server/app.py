@@ -79,10 +79,11 @@ def process_image():
     image_url = request.json['filePath']
 
     # Trigger Celery task asynchronously
-    process_image_task.delay(image_url)
+    result = process_image_task.delay(image_url)
+    result_data = result.get()
 
-    # Return response immediately
-    return jsonify({'message': 'Image processing started asynchronously'}), 202
+    response_data = {'uploaded_image_url': result_data['uploaded_image_url'], 'count': result_data['count']}
+    return jsonify(response_data), 200
 
 @app.route('/')
 def index():
