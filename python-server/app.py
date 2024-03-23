@@ -1,4 +1,5 @@
 # Import necessary modules
+from flask import Flask, request, jsonify
 from celery import Celery
 import requests
 import numpy as np
@@ -10,6 +11,7 @@ import os
 
 # Initialize Celery
 celery = Celery(__name__)
+app = Flask(__name__)
 
 # Load environment variables
 load_dotenv('.env')
@@ -81,3 +83,7 @@ def process_image():
 
     # Return response immediately
     return jsonify({'message': 'Image processing started asynchronously'}), 202
+
+@app.route('/')
+def index():
+    return "hellow world"
