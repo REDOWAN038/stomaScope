@@ -34,6 +34,7 @@ threshold = 0.5
 
 # Define Celery configuration
 celery.conf.broker_url = os.getenv('CELERY_BROKER_URL')
+celery.conf.result_backend = os.getenv('CELERY_BROKER_URL')
 
 # Define Celery task
 @celery.task
