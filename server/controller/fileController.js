@@ -1,3 +1,4 @@
+const axios = require("axios")
 const { getPublicId } = require("../handler/cloudinaryHelper")
 const fileModel = require("../models/fileModel")
 const createError = require("http-errors")
@@ -13,28 +14,39 @@ const handleUploadFile = async (req, res, next) => {
         const filePath = req.file?.path
         const newFile = { name, filePath, type: parseInt(type), uploader: userId }
 
-        let folder = ""
-        let resourceType = ""
+        // Send filePath to Python backend
+        const pythonApiUrl = 'http://127.0.0.1:5000/api/v1/files/image'; // Replace with the actual URL of your Python backend
+        const pythonResponse = await axios.post(pythonApiUrl, { filePath });
 
-        if (type === "0") {
-            const output = await processImage(filePath)
-            newFile.count = parseInt(output)
-            folder = "images"
-            resourceType = "image"
-
-        } else {
-            await processVideo(filePath)
-            folder = "videos"
-            resourceType = "video"
+        if (pythonResponse.data.uploaded_image_url) {
+            newFile.filePath = pythonResponse.data.uploaded_image_url;
+            newFile.count = pythonResponse.data.count;
         }
 
-        if (filePath) {
-            const response = await cloudinary.uploader.upload(filePath, {
-                resource_type: `${resourceType}`,
-                folder: `stomaScope/${folder}`
-            })
-            newFile.filePath = response.secure_url
-        }
+
+
+        // let folder = ""
+        // let resourceType = ""
+
+        // if (type === "0") {
+        //     const output = await processImage(filePath)
+        //     newFile.count = parseInt(output)
+        //     folder = "images"
+        //     resourceType = "image"
+
+        // } else {
+        //     await processVideo(filePath)
+        //     folder = "videos"
+        //     resourceType = "video"
+        // }
+
+        // if (filePath) {
+        //     const response = await cloudinary.uploader.upload(filePath, {
+        //         resource_type: `${resourceType}`,
+        //         folder: `stomaScope/${folder}`
+        //     })
+        //     newFile.filePath = response.secure_url
+        // }
 
         const file = await fileModel.create(newFile)
         return successResponse(res, {

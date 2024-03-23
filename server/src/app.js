@@ -21,7 +21,8 @@ const { clientURL } = require("./secret")
 
 // middlewares
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://stoma-scope.vercel.app');
+    const origin = req.headers.origin;
+    res.setHeader('Access-Control-Allow-Origin', origin); // Allow requests from any origin
     res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE");
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
