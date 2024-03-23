@@ -1,9 +1,10 @@
+import requests
+import numpy as np
+import cv2
 from flask import Flask, request, jsonify
 from cloudinary.uploader import upload
 from ultralytics import YOLO
 from dotenv import load_dotenv
-import numpy as np
-import cv2
 import os
 
 load_dotenv('.env')
@@ -32,13 +33,19 @@ def index():
 
 @app.route('/api/v1/files/image', methods=['POST'])
 def process_image():
-    # Check if the request contains 'image_url'
+    # Check if the request contains 'filePath'
     if 'filePath' not in request.json:
         return jsonify({'error': 'Image URL not provided'}), 400
     
     # Read image from Cloudinary URL
     image_url = request.json['filePath']
-    img = cv2.imread(image_url)
+    response = requests.get(image_url)
+    if response.status_code != 200:
+        return jsonify({'error': 'Failed to retrieve image from Cloudinary URL'}), 400
+
+    # Convert image data to numpy array
+    nparr = np.frombuffer(response.content, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
     # Process image with YOLO
     results = model(img)[0]
@@ -51,14 +58,15 @@ def process_image():
             cv2.putText(img, results.names[int(class_id)].upper(), (int(x1), int(y1 - 10)),
                         cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
     
+    # Encode the processed image to bytes
     _, img_bytes = cv2.imencode('.jpg', img)
     img_array = np.array(img_bytes).tobytes()
 
     # Upload processed image to Cloudinary
     uploaded_image = upload(img_array, **cloudinary_config)
 
-    # Return URL of the uploaded image
-    return jsonify({'uploaded_image_url': uploaded_image['url'], 'count':len(results)}), 200
+    # Return URL of the uploaded image and count of objects detected
+    return jsonify({'uploaded_image_url': uploaded_image['url'], 'count': len(results)}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

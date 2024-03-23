@@ -11,11 +11,19 @@ const { processVideo } = require("../handler/processVideo")
 const handleUploadFile = async (req, res, next) => {
     try {
         const { name, userId, type } = req.body
-        const filePath = req.file?.path
+        let filePath = req.file?.path
         const newFile = { name, filePath, type: parseInt(type), uploader: userId }
 
+        if (filePath) {
+            const response = await cloudinary.uploader.upload(filePath, {
+                folder: `stomaScope/images`
+            })
+            console.log(("response ", response));
+            filePath = response.url
+        }
+
         // Send filePath to Python backend
-        const pythonApiUrl = 'http://127.0.0.1:5000/api/v1/files/image'; // Replace with the actual URL of your Python backend
+        const pythonApiUrl = 'https://stomascope-python-server.onrender.com/api/v1/files/image'; // Replace with the actual URL of your Python backend
         const pythonResponse = await axios.post(pythonApiUrl, { filePath });
 
         if (pythonResponse.data.uploaded_image_url) {
