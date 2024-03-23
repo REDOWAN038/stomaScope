@@ -18,7 +18,6 @@ const handleUploadFile = async (req, res, next) => {
             const response = await cloudinary.uploader.upload(filePath, {
                 folder: `stomaScope/images`
             })
-            console.log(("response ", response));
             filePath = response.url
         }
 
@@ -26,9 +25,18 @@ const handleUploadFile = async (req, res, next) => {
         const pythonApiUrl = 'https://stomascope-python-server.onrender.com/api/v1/files/image'; // Replace with the actual URL of your Python backend
         const pythonResponse = await axios.post(pythonApiUrl, { filePath });
 
-        if (pythonResponse.data.uploaded_image_url) {
+        if (!pythonResponse) {
+            throw Error("something went wrong...")
+        }
+
+        if (filePath) {
             newFile.filePath = pythonResponse.data.uploaded_image_url;
             newFile.count = pythonResponse.data.count;
+
+            const publicId = await getPublicId(filePath)
+            const { result } = await cloudinary.uploader.destroy(`stomaScope/images}/${publicId}`, {
+                resource_type: "image"
+            })
         }
 
 

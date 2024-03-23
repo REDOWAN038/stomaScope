@@ -1,15 +1,18 @@
+# Import necessary modules
+from celery import Celery
 import requests
 import numpy as np
 import cv2
-from flask import Flask, request, jsonify
 from cloudinary.uploader import upload
 from ultralytics import YOLO
 from dotenv import load_dotenv
 import os
 
-load_dotenv('.env')
+# Initialize Celery
+celery = Celery(__name__)
 
-app = Flask(__name__)
+# Load environment variables
+load_dotenv('.env')
 
 # Cloudinary configuration
 cloudinary_config = {
@@ -27,21 +30,16 @@ model = YOLO(modelPath)
 # Threshold for YOLO
 threshold = 0.5
 
-@app.route('/')
-def index():
-    return "hello world"
+# Define Celery configuration
+celery.conf.broker_url = os.getenv('CELERY_BROKER_URL')
 
-@app.route('/api/v1/files/image', methods=['POST'])
-def process_image():
-    # Check if the request contains 'filePath'
-    if 'filePath' not in request.json:
-        return jsonify({'error': 'Image URL not provided'}), 400
-    
-    # Read image from Cloudinary URL
-    image_url = request.json['filePath']
+# Define Celery task
+@celery.task
+def process_image_task(image_url):
+    # Download image
     response = requests.get(image_url)
     if response.status_code != 200:
-        return jsonify({'error': 'Failed to retrieve image from Cloudinary URL'}), 400
+        return {'error': 'Failed to retrieve image from URL'}
 
     # Convert image data to numpy array
     nparr = np.frombuffer(response.content, np.uint8)
@@ -49,7 +47,7 @@ def process_image():
 
     # Process image with YOLO
     results = model(img)[0]
-    
+
     # Draw bounding boxes on the image
     for result in results.boxes.data.tolist():
         x1, y1, x2, y2, score, class_id = result
@@ -57,7 +55,7 @@ def process_image():
             cv2.rectangle(img, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 8)
             cv2.putText(img, results.names[int(class_id)].upper(), (int(x1), int(y1 - 10)),
                         cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
-    
+
     # Encode the processed image to bytes
     _, img_bytes = cv2.imencode('.jpg', img)
     img_array = np.array(img_bytes).tobytes()
@@ -66,7 +64,20 @@ def process_image():
     uploaded_image = upload(img_array, **cloudinary_config)
 
     # Return URL of the uploaded image and count of objects detected
-    return jsonify({'uploaded_image_url': uploaded_image['url'], 'count': len(results)}), 200
+    return {'uploaded_image_url': uploaded_image['url'], 'count': len(results)}
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# Refactor Flask endpoint to trigger Celery task
+@app.route('/api/v1/files/image', methods=['POST'])
+def process_image():
+    # Check if the request contains 'filePath'
+    if 'filePath' not in request.json:
+        return jsonify({'error': 'Image URL not provided'}), 400
+
+    # Get image URL from request
+    image_url = request.json['filePath']
+
+    # Trigger Celery task asynchronously
+    process_image_task.delay(image_url)
+
+    # Return response immediately
+    return jsonify({'message': 'Image processing started asynchronously'}), 202
