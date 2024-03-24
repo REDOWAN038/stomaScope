@@ -97,7 +97,7 @@ def process_image():
     uploaded_image = upload(img_array, **cloudinary_config)
 
     # Return URL of the uploaded image and count of objects detected
-    return {'uploaded_image_url': uploaded_image['url'], 'count': len(results)}
+    return {'uploaded_image_url': uploaded_image['url'], 'count': 0}
 
 # @app.route('/api/v1/tasks/<task_id>', methods=['GET'])
 # def get_task_result(task_id):
