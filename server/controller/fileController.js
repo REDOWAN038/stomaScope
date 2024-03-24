@@ -34,7 +34,7 @@ const handleUploadFile = async (req, res, next) => {
         if (pythonResponse.data.task_id) {
             const taskId = pythonResponse.data.task_id
 
-            while (True) {
+            while (true) {
                 const res = await axios.get(`https://stomascope-python-server.onrender.com/api/v1/tasks/${taskId}`)
 
                 console.log("status ", res.data.status);
