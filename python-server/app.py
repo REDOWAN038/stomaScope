@@ -120,3 +120,7 @@ def process_image():
 @app.route('/')
 def index():
     return "hellow world"
+
+
+if __name__=='__main__':
+    app.run(debug=True)
