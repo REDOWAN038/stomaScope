@@ -16,14 +16,14 @@ const handleUploadFile = async (req, res, next) => {
 
         if (filePath) {
             const response = await cloudinary.uploader.upload(filePath, {
-                folder: `stomaScope/images`
+                folder: `stomaScope/extras`
             })
             filePath = response.secure_url
         }
 
 
         // Send filePath to Python backend
-        const pythonApiUrl = 'https://stomascope-python-server.onrender.com/api/v1/files/image'; // Replace with the actual URL of your Python backend
+        const pythonApiUrl = 'http://127.0.0.1:8000/api/v1/files/image'; // Replace with the actual URL of your Python backend
         const pythonResponse = await axios.post(pythonApiUrl, { filePath });
 
 
@@ -31,41 +31,23 @@ const handleUploadFile = async (req, res, next) => {
             throw Error("something went wrong...")
         }
 
-        if (pythonResponse.data.task_id) {
-            const taskId = pythonResponse.data.task_id
 
-            while (true) {
-                const res = await axios.get(`https://stomascope-python-server.onrender.com/api/v1/tasks/${taskId}`)
+        if (filePath) {
+            newFile.filePath = pythonResponse.data.uploaded_image_url;
+            newFile.count = pythonResponse.data.count;
 
-                console.log("status ", res.data.status);
+            console.log("1 ", pythonResponse.data.uploaded_image_url);
+            console.log("2 ", pythonResponse.data.count);
 
-                if (res.data.status === "error") {
-                    throw Error("something went wrong...")
-                } else if (res.data.status === "success") {
-                    newFile.filePath = res.data.uploaded_image_url;
-                    newFile.count = res.data.count;
-                    const publicId = await getPublicId(filePath)
-                    await cloudinary.uploader.destroy(`stomaScope/images}/${publicId}`, {
-                        resource_type: "image"
-                    })
-                    break;
-                }
+            const publicId = await getPublicId(filePath)
+            const { result } = await cloudinary.uploader.destroy(`stomaScope/extras/${publicId}`, {
+                resource_type: "image"
+            })
+
+            if (result !== "ok") {
+                throw createError(400, "please try again")
             }
         }
-
-
-        // if (filePath) {
-        //     newFile.filePath = pythonResponse.data.uploaded_image_url;
-        //     newFile.count = pythonResponse.data.count;
-
-        //     console.log("1 ", pythonResponse.data.uploaded_image_url);
-        //     console.log("2 ", pythonResponse.data.count);
-
-        //     const publicId = await getPublicId(filePath)
-        //     const { result } = await cloudinary.uploader.destroy(`stomaScope/images}/${publicId}`, {
-        //         resource_type: "image"
-        //     })
-        // }
 
 
 
