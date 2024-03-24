@@ -25,9 +25,7 @@ cloudinary_config = {
 }
 
 # Initialize YOLO model
-current_directory = os.path.dirname(os.path.realpath(__file__))
-modelPath = os.path.join(current_directory, 'best.pt')
-model = YOLO(modelPath)
+model = YOLO('best.pt')
 
 # Threshold for YOLO
 threshold = 0.5
