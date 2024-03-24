@@ -79,7 +79,7 @@ def process_image():
     response = requests.get(image_url)
     nparr = np.frombuffer(response.content, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    # results = model(img)[0]
+    results = model(img)[0]
 
     # # Draw bounding boxes on the image
     # for result in results.boxes.data.tolist():
@@ -97,7 +97,7 @@ def process_image():
     uploaded_image = upload(img_array, **cloudinary_config)
 
     # Return URL of the uploaded image and count of objects detected
-    return {'uploaded_image_url': uploaded_image['url'], 'count': 0}
+    return {'uploaded_image_url': uploaded_image['url'], 'count': len(results)}
 
 # @app.route('/api/v1/tasks/<task_id>', methods=['GET'])
 # def get_task_result(task_id):
