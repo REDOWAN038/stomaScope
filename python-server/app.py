@@ -79,15 +79,15 @@ def process_image():
     response = requests.get(image_url)
     nparr = np.frombuffer(response.content, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    results = model(img)[0]
+    # results = model(img)[0]
 
-    # Draw bounding boxes on the image
-    for result in results.boxes.data.tolist():
-        x1, y1, x2, y2, score, class_id = result
-        if score > threshold:
-            cv2.rectangle(img, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 8)
-            cv2.putText(img, results.names[int(class_id)].upper(), (int(x1), int(y1 - 10)),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
+    # # Draw bounding boxes on the image
+    # for result in results.boxes.data.tolist():
+    #     x1, y1, x2, y2, score, class_id = result
+    #     if score > threshold:
+    #         cv2.rectangle(img, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 8)
+    #         cv2.putText(img, results.names[int(class_id)].upper(), (int(x1), int(y1 - 10)),
+    #                     cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
 
     # Encode the processed image to bytes
     _, img_bytes = cv2.imencode('.jpg', img)

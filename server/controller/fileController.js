@@ -23,7 +23,7 @@ const handleUploadFile = async (req, res, next) => {
 
 
         // Send filePath to Python backend
-        const pythonApiUrl = 'http://127.0.0.1:8000/api/v1/files/image'; // Replace with the actual URL of your Python backend
+        const pythonApiUrl = 'https://stomascope-python-server.onrender.com/api/v1/files/image'; // Replace with the actual URL of your Python backend
         const pythonResponse = await axios.post(pythonApiUrl, { filePath });
 
 
