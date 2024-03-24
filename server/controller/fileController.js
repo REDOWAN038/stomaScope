@@ -31,19 +31,41 @@ const handleUploadFile = async (req, res, next) => {
             throw Error("something went wrong...")
         }
 
+        if (pythonResponse.data.task_id) {
+            const taskId = pythonResponse.data.task_id
 
-        if (filePath) {
-            newFile.filePath = pythonResponse.data.uploaded_image_url;
-            newFile.count = pythonResponse.data.count;
+            while (True) {
+                const res = await axios.get(`https://stomascope-python-server.onrender.com/api/v1/tasks/${taskId}`)
 
-            console.log("1 ", pythonResponse.data.uploaded_image_url);
-            console.log("2 ", pythonResponse.data.count);
+                console.log("status ", res.data.status);
 
-            const publicId = await getPublicId(filePath)
-            const { result } = await cloudinary.uploader.destroy(`stomaScope/images}/${publicId}`, {
-                resource_type: "image"
-            })
+                if (res.data.status === "error") {
+                    throw Error("something went wrong...")
+                } else if (res.data.status === "success") {
+                    newFile.filePath = res.data.uploaded_image_url;
+                    newFile.count = res.data.count;
+                    const publicId = await getPublicId(filePath)
+                    await cloudinary.uploader.destroy(`stomaScope/images}/${publicId}`, {
+                        resource_type: "image"
+                    })
+                    break;
+                }
+            }
         }
+
+
+        // if (filePath) {
+        //     newFile.filePath = pythonResponse.data.uploaded_image_url;
+        //     newFile.count = pythonResponse.data.count;
+
+        //     console.log("1 ", pythonResponse.data.uploaded_image_url);
+        //     console.log("2 ", pythonResponse.data.count);
+
+        //     const publicId = await getPublicId(filePath)
+        //     const { result } = await cloudinary.uploader.destroy(`stomaScope/images}/${publicId}`, {
+        //         resource_type: "image"
+        //     })
+        // }
 
 
 

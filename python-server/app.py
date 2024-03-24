@@ -81,10 +81,25 @@ def process_image():
 
     # Trigger Celery task asynchronously
     result = process_image_task.delay(image_url)
-    result_data = result.get()
+    return jsonify({'message': 'Image processing started asynchronously', 'task_id': result.id}), 202
 
-    response_data = {'uploaded_image_url': result_data['uploaded_image_url'], 'count': result_data['count']}
-    return jsonify(response_data), 200
+@app.route('/api/v1/tasks/<task_id>', methods=['GET'])
+def get_task_result(task_id):
+    # Retrieve task result
+    result = process_image_task.AsyncResult(task_id)
+
+    # Check task status
+    if result.ready():
+        # Task is completed, return the result
+        result_data = result.get()
+        if 'error' in result_data:
+            return jsonify({'status': 'error','error': result_data['error']}), 400
+        return jsonify({'status': 'success', 'uploaded_image_url': result_data['uploaded_image_url'], 'count': result_data['count']}), 200
+    else:
+        # Task is still pending
+        return jsonify({'status': 'pending'}), 202
+
+
 
 @app.route('/')
 def index():
