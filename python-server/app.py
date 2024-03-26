@@ -60,10 +60,10 @@ def process_image():
     img_array = np.array(img_bytes).tobytes()
 
     # Upload processed image to Cloudinary
-    uploaded_image = upload(img_array, **cloudinary_config_image)
+    cloudinary_response = upload(img_array, **cloudinary_config_image)
 
     # Return URL of the uploaded image and count of objects detected
-    return {'uploaded_image_url': uploaded_image['url'], 'count': len(results)}
+    return {'uploaded_url': cloudinary_response['secure_url'], 'count': len(results)}
 
 
 
@@ -76,16 +76,17 @@ def process_video():
     # Get image URL from request
     video_url = request.json['filePath']
     response = requests.get(video_url, stream=True)
-    content = response.content
-    nparr = np.frombuffer(content, np.uint8)
-    video_capture = cv2.VideoCapture()
-    video_capture.open(nparr)
-    frames = []
+    with open("temp_video.mp4", 'wb') as f:
+        for chunk in response.iter_content(1024):
+            f.write(chunk)
 
-    while True:
-        ret, frame = video_capture.read()
-        if not ret:
-            break
+    cap = cv2.VideoCapture("temp_video.mp4")
+    ret, frame = cap.read()
+    H, W, _ = frame.shape
+    out = cv2.VideoWriter("output.mp4", cv2.VideoWriter_fourcc(*'mp4v'), int(cap.get(cv2.CAP_PROP_FPS)), (W, H))
+
+
+    while ret:
         results = model(frame)[0]
 
         for result in results.boxes.data.tolist():
@@ -95,11 +96,19 @@ def process_video():
                 cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 8)
                 cv2.putText(frame, results.names[int(class_id)].upper(), (int(x1), int(y1 - 10)),
                             cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0, 255, 0), 3, cv2.LINE_AA)
-        frames.append(frame)
 
-    video_capture.release()
+        out.write(frame)
+        ret, frame = cap.read()
+
+    cap.release()
+    out.release()
     cv2.destroyAllWindows()
-    # return {'uploaded_video_url': uploaded_image['url']}
+
+    cloudinary_response = upload("output.mp4", resource_type="video", **cloudinary_config_video)
+    os.remove("output.mp4")
+    os.remove("temp_video.mp4")
+
+    return {'uploaded_url': cloudinary_response['secure_url']}
 
 
 @app.route('/')
