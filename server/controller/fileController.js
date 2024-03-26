@@ -14,64 +14,52 @@ const handleUploadFile = async (req, res, next) => {
         let filePath = req.file?.path
         const newFile = { name, filePath, type: parseInt(type), uploader: userId }
 
-        if (filePath) {
-            const response = await cloudinary.uploader.upload(filePath, {
-                folder: `stomaScope/extras`
-            })
-            filePath = response.secure_url
+
+        let folder = ""
+        let resourceType = ""
+
+        if (type === "0") {
+            folder = "images"
+            resourceType = "image"
+
+        } else {
+            folder = "videos"
+            resourceType = "video"
         }
 
+        const response = await cloudinary.uploader.upload(filePath, {
+            resource_type: `${resourceType}`,
+            folder: `stomaScope/extras`
+        })
+        filePath = response.secure_url
+
+        console.log("hurrray");
 
         // Send filePath to Python backend
-        const pythonApiUrl = 'https://stomascope-python-server.onrender.com/api/v1/files/image'; // Replace with the actual URL of your Python backend
+        const pythonApiUrl = `http://127.0.0.1:8000/api/v1/files/${resourceType}`; // Replace with the actual URL of your Python backend
         const pythonResponse = await axios.post(pythonApiUrl, { filePath });
 
+        console.log("alas");
 
-        if (!pythonResponse) {
-            throw Error("something went wrong...")
-        }
-
-
-        if (filePath) {
-            newFile.filePath = pythonResponse.data.uploaded_image_url;
-            newFile.count = pythonResponse.data.count;
-
-            console.log("1 ", pythonResponse.data.uploaded_image_url);
-            console.log("2 ", pythonResponse.data.count);
-
-            const publicId = await getPublicId(filePath)
-            const { result } = await cloudinary.uploader.destroy(`stomaScope/extras/${publicId}`, {
-                resource_type: "image"
-            })
-
-            if (result !== "ok") {
-                throw createError(400, "please try again")
-            }
-        }
-
-
-
-        // let folder = ""
-        // let resourceType = ""
-
-        // if (type === "0") {
-        //     const output = await processImage(filePath)
-        //     newFile.count = parseInt(output)
-        //     folder = "images"
-        //     resourceType = "image"
-
-        // } else {
-        //     await processVideo(filePath)
-        //     folder = "videos"
-        //     resourceType = "video"
+        // if (!pythonResponse) {
+        //     throw Error("something went wrong...")
         // }
 
-        // if (filePath) {
-        //     const response = await cloudinary.uploader.upload(filePath, {
-        //         resource_type: `${resourceType}`,
-        //         folder: `stomaScope/${folder}`
+        // if (pythonResponse) {
+        //     newFile.filePath = pythonResponse.data.uploaded_image_url;
+        //     if (type === "0") {
+        //         newFile.count = pythonResponse.data.count;
+        //     }
+
+        //     const publicId = await getPublicId(filePath)
+        //     console.log("public id : ", publicId);
+        //     const { result } = await cloudinary.uploader.destroy(`stomaScope/extras/${publicId}`, {
+        //         resource_type: resourceType
         //     })
-        //     newFile.filePath = response.secure_url
+
+        //     if (result !== "ok") {
+        //         throw createError(400, "please try again")
+        //     }
         // }
 
         const file = await fileModel.create(newFile)
