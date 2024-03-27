@@ -4,8 +4,6 @@ const fileModel = require("../models/fileModel")
 const createError = require("http-errors")
 const cloudinary = require("../config/cloudinary")
 const { successResponse } = require("../handler/responseHandler")
-const { processImage } = require("../handler/processImage")
-const { processVideo } = require("../handler/processVideo")
 
 // handle upload file
 const handleUploadFile = async (req, res, next) => {
@@ -15,15 +13,12 @@ const handleUploadFile = async (req, res, next) => {
         const newFile = { name, filePath, type: parseInt(type), uploader: userId }
 
 
-        let folder = ""
         let resourceType = ""
 
         if (type === "0") {
-            folder = "images"
             resourceType = "image"
 
         } else {
-            folder = "videos"
             resourceType = "video"
         }
 
@@ -50,7 +45,7 @@ const handleUploadFile = async (req, res, next) => {
             }
 
             const publicId = await getPublicId(filePath)
-            const { result } = await cloudinary.uploader.destroy(`stomaScope/extras/${publicId}`, {
+            await cloudinary.uploader.destroy(`stomaScope/extras/${publicId}`, {
                 resource_type: resourceType
             })
         }

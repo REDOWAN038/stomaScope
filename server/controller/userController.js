@@ -69,7 +69,8 @@ const activateUserAccount = async (req, res, next) => {
         if (existingUser) {
             throw createError(409, "user already exists by this mail")
         }
-        const user = await userModel.create(decoded)
+
+        await userModel.create(decoded)
 
         return successResponse(res, {
             statusCode: 201,

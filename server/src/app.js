@@ -10,8 +10,8 @@ const userRoutes = require("../routes/userRoutes")
 const seedRoutes = require("../routes/seedRoutes")
 const authRoutes = require("../routes/authRoutes")
 const fileRoutes = require("../routes/fileRoute")
+
 const { errorResponse } = require("../handler/responseHandler")
-const { clientURL } = require("./secret")
 
 // const limiter = rateLimit({
 //     windowMs: 1 * 60 * 1000,
@@ -20,24 +20,13 @@ const { clientURL } = require("./secret")
 // })
 
 // middlewares
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', 'https://stoma-scope.vercel.app');
-//     res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE");
-//     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-//     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
-//     next();
-// });
-// app.use(cors({
-//     origin: clientURL,
-//     methods: ["POST", "GET", "PUT", "DELETE"],
-//     // allowedHeaders: ['Content-Type', 'Authorization'],
-//     credentials: true
-// }))
-// app.use(cors({
-//     origin: 'https://stoma-scope.vercel.app',
-//     methods: ["POST", "GET", "PUT", "DELETE"],
-//     credentials: true
-// }));
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+    res.setHeader('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE");
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (cookies)
+    next();
+});
 app.use(cookieParser())
 app.use(morgan("dev"))
 app.use(express.json())

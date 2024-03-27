@@ -24,12 +24,7 @@ const validateFileUpload = [
     body("name")
         .trim()
         .notEmpty()
-        .withMessage("Name is required"),
-
-    // body("image")
-    // .notEmpty()
-    // .withMessage("image is required bro"),
-
+        .withMessage("Name is required")
 ]
 
 const validateUserResetPassword = [

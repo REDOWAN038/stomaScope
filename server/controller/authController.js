@@ -11,26 +11,29 @@ const handleLogin = async (req, res, next) => {
     try {
         const { email, password } = req.body
 
-        const user = await userModel.findOne({ email })
+        const isUser = await userModel.findOne({ email })
 
-        if (!user) {
+        if (!isUser) {
             throw createError(404, "user with this email does not registered. please sign up")
         }
 
-        const isPasswordMatched = await bcrypt.compare(password, user.password)
+        const isPasswordMatched = await bcrypt.compare(password, isUser.password)
 
         if (!isPasswordMatched) {
             throw createError(401, "wrong password. try again!!!")
         }
 
         // creating token and set up in cookies
-        const accessToken = createJWT({ _id: user._id }, jwtAccessKey, "24d")
+        const accessToken = createJWT({ _id: isUser._id }, jwtAccessKey, "24d")
         res.cookie("accessToken", accessToken, {
             maxAge: 24 * 24 * 60 * 60 * 1000,  // expires in 24 days
             httpOnly: true,
-            secure: true,
-            sameSite: "none"
+            // secure: true,
+            // sameSite: "none"
         })
+
+        const user = isUser.toObject()
+        delete user.password
 
         return successResponse(res, {
             statusCode: 200,
