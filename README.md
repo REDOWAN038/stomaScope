@@ -81,6 +81,7 @@ Detecting stomata from a video/image
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `name`, `userId`, `type` | `string` | **Required**. all |
+| `filePath` | `file` | **Required**. all |
 
 
 #### delete image/video
@@ -144,6 +145,8 @@ Detecting stomata from a video/image
 **Client:** React, Redux, TailwindCSS, Bootstrap
 
 **Server:** Node, Express, Flask
+
+**Database:** MongoDB
 
 ## Environment Variables
 
