@@ -11,6 +11,9 @@ const clientURL = process.env.CLIENT_URL || ""
 const cloudName = process.env.CLOUDINARY_NAME
 const cloudApiKey = process.env.CLOUDINARY_API_KEY
 const cloudSecretKey = process.env.CLOUDINARY_SECRET_KEY
+const cloudImageFolder = process.env.CLOUDINARY_IMAGE_FOLDER
+const cloudVideoFolder = process.env.CLOUDINARY_VIDEO_FOLDER
+const cloudTempFolder = process.env.CLOUDINARY_TEMP_FOLDER
 
 
 
@@ -25,5 +28,8 @@ module.exports = {
     cloudName,
     cloudApiKey,
     cloudSecretKey,
-    jwtResetKey
+    jwtResetKey,
+    cloudImageFolder,
+    cloudVideoFolder,
+    cloudTempFolder
 }

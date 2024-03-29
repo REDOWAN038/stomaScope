@@ -142,11 +142,15 @@ Detecting stomata from a video/image
 
 ## Tech Stack
 
+**ML FrameWork:** TensorFlow, Pytorch, YOLO
+
 **Client:** React, Redux, TailwindCSS, Bootstrap
 
 **Server:** Node, Express, Flask
 
 **Database:** MongoDB
+
+**Useful Libraries:** OpenCV, NumPy
 
 ## Environment Variables
 
@@ -179,6 +183,12 @@ To run this project, you will need to add the following environment variables to
 `CLOUDINARY_API_KEY`
 
 `CLOUDINARY_SECRET_KEY`
+
+`CLOUDINARY_IMAGE_FOLDER`
+
+`CLOUDINARY_VIDEO_FOLDER`
+
+`CLOUDINARY_TEMP_FOLDER`
 
 
 To run this project, you will need to add the following environment variables to your python backend (python-server folder) .env file

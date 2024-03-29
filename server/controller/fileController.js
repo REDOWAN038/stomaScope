@@ -4,6 +4,7 @@ const fileModel = require("../models/fileModel")
 const createError = require("http-errors")
 const cloudinary = require("../config/cloudinary")
 const { successResponse } = require("../handler/responseHandler")
+const { cloudTempFolder, cloudImageFolder, cloudVideoFolder } = require("../src/secret")
 
 // handle upload file
 const handleUploadFile = async (req, res, next) => {
@@ -24,7 +25,7 @@ const handleUploadFile = async (req, res, next) => {
 
         const response = await cloudinary.uploader.upload(filePath, {
             resource_type: `${resourceType}`,
-            folder: `stomaScope/extras`
+            folder: `${cloudTempFolder}`
         })
         filePath = response.secure_url
 
@@ -45,7 +46,7 @@ const handleUploadFile = async (req, res, next) => {
             }
 
             const publicId = await getPublicId(filePath)
-            await cloudinary.uploader.destroy(`stomaScope/extras/${publicId}`, {
+            await cloudinary.uploader.destroy(`${cloudTempFolder}/${publicId}`, {
                 resource_type: resourceType
             })
         }
@@ -78,24 +79,24 @@ const handleDeleteFile = async (req, res, next) => {
         }
 
         const publicId = await getPublicId(existingFile.filePath)
-        let folder = ""
-        let resourceType = ""
 
         if (type === "images") {
-            folder = "images"
-            resourceType = "image"
+            const { result } = await cloudinary.uploader.destroy(`${cloudImageFolder}/${publicId}`, {
+                resource_type: "image"
+            })
+
+            if (result !== "ok") {
+                throw createError(400, "please try again")
+            }
         } else {
-            folder = "videos"
-            resourceType = "video"
+            const { result } = await cloudinary.uploader.destroy(`${cloudVideoFolder}/${publicId}`, {
+                resource_type: "video"
+            })
+            if (result !== "ok") {
+                throw createError(400, "please try again")
+            }
         }
 
-        const { result } = await cloudinary.uploader.destroy(`stomaScope/${folder}/${publicId}`, {
-            resource_type: resourceType
-        })
-
-        if (result !== "ok") {
-            throw createError(400, "please try again")
-        }
 
         await fileModel.findByIdAndDelete(id)
 
