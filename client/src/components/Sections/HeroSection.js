@@ -19,7 +19,7 @@ const HeroSection = () => {
                     microscopic images and videos of leaves. With our cutting edge
                     technology, you can easily analyze stomata.</p>
                 <button className="bg-sgreen-100 text-white py-4 px-6 rounded-xl"
-                    onClick={() => navigate("/users/upload")}>Explore <i class="fa-solid fa-arrow-right"></i></button>
+                    onClick={() => navigate("/users/upload")}>Get Started <i class="fa-solid fa-arrow-right"></i></button>
             </div>
         </section>
     )
